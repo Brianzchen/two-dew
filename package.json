@@ -26,7 +26,7 @@
     "copy": "copyfiles -u 1 public/css/styles.min.css public/scripts/* public/manifest.json public/robots.txt dist",
     "prep": "npm run clean && npm run uglify && npm run copy",
     "analyze": "npm run prep && cross-env NODE_ENV=production webpack --config webpack/webpack.analyze.js",
-    "start": "npm run prep && webpack --config webpack/webpack.dev.js && webpack serve --config webpack/webpack.dev.js",
+    "start": "npm run prep && webpack --config webpack/webpack.dev.js && webpack-dev-server --config webpack/webpack.dev.js",
     "build": "npm run prep && cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js"
   },
   "dependencies": {
@@ -75,7 +75,7 @@
     "uglifycss": "^0.0.29",
     "webpack": "^4.0.0",
     "webpack-bundle-analyzer": "^4.1.0",
-    "webpack-cli": "^4.2.0",
+    "webpack-cli": "^3.0.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.4.0"
   },
