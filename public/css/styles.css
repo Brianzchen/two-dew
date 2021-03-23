@@ -1,0 +1,26 @@
+* {
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+}
+
+html,  body,  #root {
+  margin: 0;
+  height: 100%;
+}
+
+input, textarea, body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  outline: none;
+  background: none;
+  border: none;
+}
+
+div {
+  box-sizing: border-box;
+}
