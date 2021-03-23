@@ -4,22 +4,17 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createBrowserHistory } from 'history';
-import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
+import { BrowserRouter } from 'react-router-dom';
 
 import reducers from '@core/reducers';
 import rootDomTag from '@pkgs/root-dom-tag';
 
 import App from './App';
 
-// Create history object for tracking routes
-const history = createBrowserHistory();
-
 // Create middleware required for all builds
 const middleware = [
   thunk,
   thunk.withExtraArgument(''),
-  routerMiddleware(history),
 ];
 
 const composeEnhancers = (
@@ -28,7 +23,7 @@ const composeEnhancers = (
 );
 
 const store = createStore(
-  reducers(history),
+  reducers(),
   composeEnhancers(
     applyMiddleware(...middleware),
   ),
@@ -36,9 +31,9 @@ const store = createStore(
 
 const Main = () => (
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <BrowserRouter>
       <App />
-    </ConnectedRouter>
+    </BrowserRouter>
   </Provider>
 );
 
