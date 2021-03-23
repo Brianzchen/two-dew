@@ -3,9 +3,11 @@ import * as React from 'react';
 
 import { Box } from '@pkgs/components';
 
+import Header from './Header';
+
 const App = (): React.Node => (
   <Box>
-    Scaled fractal
+    <Header />
   </Box>
 );
 
