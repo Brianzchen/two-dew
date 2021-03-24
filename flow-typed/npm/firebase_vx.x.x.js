@@ -9,14 +9,24 @@ declare module 'firebase/app' {
     measurementId?: string,
   |};
 
+  declare type CurrentUser = {|
+    email: string,
+    emailVerified: boolean,
+  |};
+
   declare type Auth = () => {|
+    currentUser: ?CurrentUser,
     createUserWithEmailAndPassword: (
       email: string,
       password: string,
     ) => Promise<{|
-      user: {|
-
-      |}
+      user: CurrentUser
+    |}>,
+    signInWithEmailAndPassword: (
+      email: string,
+      password: string,
+    ) => Promise<{|
+      user: CurrentUser
     |}>,
     signOut: () => Promise<void>,
   |}

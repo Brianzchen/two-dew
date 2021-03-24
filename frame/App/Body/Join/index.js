@@ -29,6 +29,9 @@ const Join = (): React.Node => {
     <form
       onSubmit={handleCreateAccount}
     >
+      <h1>
+        Join
+      </h1>
       <input
         value={email}
         onChange={(e) => {
