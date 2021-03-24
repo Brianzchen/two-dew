@@ -1,22 +1,18 @@
 // @flow
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 
-import { app } from '@core/store';
 import { useFirebase } from '@pkgs/utils';
 
 const Login = (): React.Node => {
   const firebase = useFirebase();
-  const dispatch = useDispatch();
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState();
 
-  const handleCreateAccount = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      dispatch(app.actions.setAuthenticated(true));
     }).catch((err) => {
       console.error(err);
       setError(err?.message);
@@ -25,7 +21,7 @@ const Login = (): React.Node => {
 
   return (
     <form
-      onSubmit={handleCreateAccount}
+      onSubmit={handleLogin}
     >
       <h1>
         Login

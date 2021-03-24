@@ -1,15 +1,12 @@
 // @flow
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { app } from '@core/store';
 import routes from '@pkgs/routes';
 import { useFirebase } from '@pkgs/utils';
 
 const Join = (): React.Node => {
   const firebase = useFirebase();
-  const dispatch = useDispatch();
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -18,7 +15,6 @@ const Join = (): React.Node => {
   const handleCreateAccount = (e) => {
     e.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-      dispatch(app.actions.setAuthenticated(true));
     }).catch((err) => {
       console.error(err);
       setError(err?.message);

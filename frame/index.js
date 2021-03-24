@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import rootDomTag from '@pkgs/root-dom-tag';
 import { firebaseContext } from '@pkgs/utils';
 
-import reducers from '@core/store';
+import reducers, { app } from '@core/store';
 
 import App from './App';
 
@@ -47,6 +47,10 @@ const store = createStore(
     applyMiddleware(...middleware),
   ),
 );
+
+firebase.auth().onAuthStateChanged((user) => {
+  store.dispatch(app.actions.setAuthenticated(!!user));
+});
 
 const Main = () => (
   <Provider store={store}>

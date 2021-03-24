@@ -22,6 +22,7 @@ declare module 'firebase/app' {
     ) => Promise<{|
       user: CurrentUser
     |}>,
+    onAuthStateChanged: (callback: (user: CurrentUser) => void) => void,
     signInWithEmailAndPassword: (
       email: string,
       password: string,
