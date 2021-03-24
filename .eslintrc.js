@@ -31,7 +31,12 @@ module.exports = {
         groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
         pathGroups: [
           {
-            pattern: '@tabdigital/**',
+            pattern: '@pkgs/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: '@core/**',
             group: 'internal',
             position: 'before',
           },

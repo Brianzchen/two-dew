@@ -33,6 +33,7 @@
     "@core/reducers": "1.0.0",
     "@pkgs/components": "1.0.0",
     "@pkgs/root-dom-tag": "1.0.0",
+    "@pkgs/routes": "1.0.0",
     "aphrodite": "^2.4.0",
     "connected-react-router": "^6.8.0",
     "history": "^5.0.0",
