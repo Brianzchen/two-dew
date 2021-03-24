@@ -30,7 +30,7 @@
     "build": "npm run prep && cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js"
   },
   "dependencies": {
-    "@core/reducers": "1.0.0",
+    "@core/store": "1.0.0",
     "@pkgs/components": "1.0.0",
     "@pkgs/root-dom-tag": "1.0.0",
     "@pkgs/routes": "1.0.0",

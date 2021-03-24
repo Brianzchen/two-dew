@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import rootDomTag from '@pkgs/root-dom-tag';
 import { firebaseContext } from '@pkgs/utils';
 
-import reducers from '@core/reducers';
+import reducers from '@core/store';
 
 import App from './App';
 

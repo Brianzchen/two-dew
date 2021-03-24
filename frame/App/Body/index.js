@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import { useSelector } from '@core/store';
 import routes from '@pkgs/routes';
 
 import Join from './Join';
@@ -9,7 +10,7 @@ import Login from './Login';
 import Main from './Main';
 
 const Body = (): React.Node => {
-  const authenticated = false;
+  const authenticated = useSelector((state) => state.app.authenticated);
 
   return (
     <Switch>
@@ -23,10 +24,22 @@ const Body = (): React.Node => {
           )}
       </Route>
       <Route path={routes.join}>
-        <Join />
+        {authenticated
+          ? (
+            <Redirect to={routes.main} />
+          )
+          : (
+            <Join />
+          )}
       </Route>
       <Route path={routes.login}>
-        <Login />
+        {authenticated
+          ? (
+            <Redirect to={routes.main} />
+          )
+          : (
+            <Login />
+          )}
       </Route>
     </Switch>
   );

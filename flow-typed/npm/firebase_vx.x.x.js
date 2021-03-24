@@ -13,7 +13,11 @@ declare module 'firebase/app' {
     createUserWithEmailAndPassword: (
       email: string,
       password: string,
-    ) => Promise<{ ... }>,
+    ) => Promise<{|
+      user: {|
+
+      |}
+    |}>,
     signOut: () => Promise<void>,
   |}
 
@@ -26,7 +30,7 @@ declare module 'firebase/app' {
     analytics: (...args: Array<any>) => any,
     app: (...args: Array<any>) => any,
     apps: (...args: Array<any>) => any,
-    auth: (...args: Array<any>) => any,
+    auth: Auth,
     firestore: (...args: Array<any>) => any,
     initializeApp: InitializeApp,
     installations: (...args: Array<any>) => any,
