@@ -15,6 +15,11 @@ const Header = (): React.Node => {
     },
     headerText: {
       display: 'inline-flex',
+      justifyContent: 'flex-start ',
+      width: '50%',
+    },
+    headerStatus: {
+      display: 'inline-flex',
       justifyContent: 'flex-end ',
       width: '50%',
     },
@@ -24,7 +29,7 @@ const Header = (): React.Node => {
     <Box style={styles.container}>
       <Box style={styles.headerText}>
         <h1 style={{
-          fontSize: '40px', fontWeight: 600, margin: 0, padding: 0,
+          fontSize: '40px', fontWeight: 600, margin: 0, padding: 0, marginLeft: '5%',
         }}
         >
           Two
@@ -36,7 +41,7 @@ const Header = (): React.Node => {
           Dew
         </h1>
       </Box>
-      <Box style={styles.headerText}>
+      <Box style={styles.headerStatus}>
         <AccountStatus />
       </Box>
 
