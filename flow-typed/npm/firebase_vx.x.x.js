@@ -12,6 +12,7 @@ declare module 'firebase/app' {
   declare type CurrentUser = {|
     email: string,
     emailVerified: boolean,
+    uid: string,
   |};
 
   declare type Auth = () => {|
@@ -32,6 +33,17 @@ declare module 'firebase/app' {
     signOut: () => Promise<void>,
   |}
 
+  declare type DocRef = {|
+    id: string,
+  |};
+
+  declare type Firestore = () => ({|
+    collection: (collection: string) => ({|
+      add: ({ [key: string]: any }) => Promise<DocRef>,
+      get: () => Promise<Array<any>>,
+    |})
+  |});
+
   declare type InitializeApp = (config: FirebaseConfig) => void;
 
   declare type Firebase = {|
@@ -42,7 +54,7 @@ declare module 'firebase/app' {
     app: (...args: Array<any>) => any,
     apps: (...args: Array<any>) => any,
     auth: Auth,
-    firestore: (...args: Array<any>) => any,
+    firestore: Firestore,
     initializeApp: InitializeApp,
     installations: (...args: Array<any>) => any,
     onLog: (...args: Array<any>) => any,
