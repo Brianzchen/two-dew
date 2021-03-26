@@ -3,23 +3,38 @@ import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
 
-const NewList = (): React.Node => {
+type ListT = {
+  name: string,
+  owner: string,
+  sharedWith: Array<string>,
+  type: 'list' | 'daily',
+};
+
+type Props = {
+  addList: (list: ListT) => void,
+};
+
+const NewList = ({
+  addList,
+}: Props): React.Node => {
   const firebase = useFirebase();
 
   const [name, setName] = React.useState('');
 
   const handleCreateList = () => {
     const user = firebase.auth().currentUser;
+    const db = firebase.firestore().collection('lists');
 
     if (user) {
-      firebase.firestore().collection('lists').add({
+      db.add(({
         name,
         owner: user.uid,
         sharedWith: [],
-        type: 'bulk',
-      }).then((docRef) => {
-        // Doesn't work yet because of user permissions
-        console.log(docRef);
+        type: 'list',
+      }: ListT)).then((docRef) => {
+        db.doc(docRef.id).get().then((snapshot) => {
+          addList(snapshot.data());
+        });
       });
     }
   };

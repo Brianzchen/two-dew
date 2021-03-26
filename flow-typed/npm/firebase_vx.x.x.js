@@ -37,10 +37,35 @@ declare module 'firebase/app' {
     id: string,
   |};
 
+  declare type Firestore$Get = () => Promise<Array<{|
+    data: () => any,
+  |}>>;
+
   declare type Firestore = () => ({|
     collection: (collection: string) => ({|
       add: ({ [key: string]: any }) => Promise<DocRef>,
-      get: () => Promise<Array<any>>,
+      doc: (id: string) => {|
+        get: () => Promise<{|
+          data: () => any,
+        |}>,
+      |},
+      get: Firestore$Get,
+      where: (
+        field: string,
+        comparator: | '<'
+          | '<='
+          | '=='
+          | '>'
+          | '>='
+          | '!='
+          | 'array-contains'
+          | 'array-contains-any'
+          | 'in'
+          | 'not-in',
+        value: any,
+      ) => {|
+        get: Firestore$Get,
+      |}
     |})
   |});
 
