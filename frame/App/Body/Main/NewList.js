@@ -34,6 +34,7 @@ const NewList = ({
       }: ListT)).then((docRef) => {
         db.doc(docRef.id).get().then((snapshot) => {
           addList(snapshot.data());
+          setName('');
         });
       });
     }
