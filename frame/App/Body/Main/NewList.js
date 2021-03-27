@@ -3,12 +3,7 @@ import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
 
-type ListT = {
-  name: string,
-  owner: string,
-  sharedWith: Array<string>,
-  type: 'list' | 'daily',
-};
+import type { ListT } from '.';
 
 type Props = {
   addList: (list: ListT) => void,

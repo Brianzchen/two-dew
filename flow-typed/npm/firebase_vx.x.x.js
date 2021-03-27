@@ -37,9 +37,11 @@ declare module 'firebase/app' {
     id: string,
   |};
 
-  declare type Firestore$Get = () => Promise<Array<{|
-    data: () => any,
-  |}>>;
+  declare type Firestore$Get = () => Promise<{|
+    forEach: (({|
+      data: () => any,
+    |}) => void) => void,
+  |}>;
 
   declare type Firestore = () => ({|
     collection: (collection: string) => ({|
@@ -48,6 +50,8 @@ declare module 'firebase/app' {
         get: () => Promise<{|
           data: () => any,
         |}>,
+        set: ({ [key: string]: any }) => Promise<DocRef>,
+        update: ({ [key: string]: any }) => Promise<DocRef>,
       |},
       get: Firestore$Get,
       where: (
