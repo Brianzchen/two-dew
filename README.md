@@ -1,6 +1,6 @@
 # two-dew
 
-![Build](https://github.com/brianzchen/two-dew/workflows/CI/badge.svg)
+![Build](https://github.com/brianzchen/two-dew/workflows/Deploy/badge.svg)
 
 Open sourced todo app because I don't want to pay for the real thing
 
