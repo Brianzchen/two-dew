@@ -27,7 +27,7 @@
     "prep": "npm run clean && npm run uglify && npm run copy",
     "analyze": "npm run prep && cross-env NODE_ENV=production webpack --config webpack/webpack.analyze.js",
     "start": "npm run prep && webpack --config webpack/webpack.dev.js && webpack-dev-server --config webpack/webpack.dev.js",
-    "build": "npm run prep && cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js"
+    "build": "npm run prep && cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js && mv dist/index.html dist/200.html"
   },
   "dependencies": {
     "@core/store": "1.0.0",
@@ -75,7 +75,7 @@
     "jest": "^26.6.3",
     "lint-staged": "^9.1.0",
     "rimraf": "^2.6.2",
-    "terser-webpack-plugin": "^5.0.3",
+    "terser-webpack-plugin": "^4.0.0",
     "uglifycss": "^0.0.29",
     "webpack": "^4.0.0",
     "webpack-bundle-analyzer": "^4.1.0",
