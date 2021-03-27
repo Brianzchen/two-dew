@@ -19,6 +19,7 @@ const AccountStatus = (): React.Node => {
       <button
         type="button"
         onClick={handleLogout}
+        style={{ marginRight: '10%' }}
       >
         Logout
       </button>
@@ -28,6 +29,7 @@ const AccountStatus = (): React.Node => {
   return (
     <Link
       to={routes.login}
+      style={{ margin: '2%', marginRight: '10%' }}
     >
       Login
     </Link>
