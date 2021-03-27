@@ -1,5 +1,7 @@
 # two-dew
 
+![Build](https://github.com/brianzchen/two-dew/workflows/CI/badge.svg)
+
 Open sourced todo app because I don't want to pay for the real thing
 
 ## Database structure
