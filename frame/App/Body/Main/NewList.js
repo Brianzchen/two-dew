@@ -15,6 +15,7 @@ const NewList = ({
   const firebase = useFirebase();
 
   const [name, setName] = React.useState('');
+  const [type, setType] = React.useState('list');
 
   const handleCreateList = () => {
     const user = firebase.auth().currentUser;
@@ -25,7 +26,7 @@ const NewList = ({
         name,
         owner: user.uid,
         sharedWith: [],
-        type: 'list',
+        type,
       })).then((docRef) => {
         db.doc(docRef.id).get().then((snapshot) => {
           addList(snapshot.data());
@@ -43,6 +44,19 @@ const NewList = ({
           setName(e.currentTarget.value);
         }}
       />
+      <select
+        value={type}
+        onChange={(e) => {
+          setType(e.currentTarget.value);
+        }}
+      >
+        <option value="list">
+          list
+        </option>
+        <option value="daily">
+          daily
+        </option>
+      </select>
       <button
         type="button"
         onClick={handleCreateList}

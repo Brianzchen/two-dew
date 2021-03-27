@@ -1,15 +1,8 @@
 // @flow
 import * as React from 'react';
 
+import type { ListItemT } from '@core/types';
 import { useFirebase } from '@pkgs/utils';
-
-export type ListItemT = {
-  id: string,
-  name: string,
-  description: string,
-  completed: boolean,
-  day: number,
-};
 
 type Props = {
   listId: string,

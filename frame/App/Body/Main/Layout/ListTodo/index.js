@@ -1,10 +1,9 @@
 // @flow
 import * as React from 'react';
 
-import { useFirebase } from '@pkgs/utils';
+import { useGetListItems } from '@core/service';
 
 import type { ListT } from '../..';
-import type { ListItemT } from '../components/AddItem';
 
 import AddItem from '../components/AddItem';
 
@@ -16,23 +15,11 @@ const ListTodo = ({
   id,
   name,
 }: Props): React.Node => {
-  const firebase = useFirebase();
+  const [items, setItems] = React.useState([]);
 
-  const [items, setItems] = React.useState<Array<ListItemT>>([]);
-
-  React.useEffect(() => {
-    firebase.firestore().collection('lists').doc(id).collection('items')
-      .onSnapshot((snapshot) => {
-        const newItems = [];
-        snapshot.forEach((shot) => {
-          newItems.push({
-            ...shot.data(),
-            id: shot.id,
-          });
-        });
-        setItems(newItems);
-      });
-  }, [id]);
+  useGetListItems(id, (newItems) => {
+    setItems(newItems);
+  });
 
   return (
     <div>
