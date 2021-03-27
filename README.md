@@ -23,14 +23,7 @@ two-dew
       - name: string
       - description: string
       - completed: boolean
-      - day: | 'sunday'
-        | 'monday'
-        | 'tuesday'
-        | 'wednesday'
-        | 'thursday'
-        | 'friday'
-        | 'saturday'
-        | void
+      - day: 0 -> 6 (days of the week starting at Sunday)
   - users
     - layout: Array<{ data: Array<string> }> (2d array layout of app)
 ```

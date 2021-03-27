@@ -3,8 +3,10 @@ import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
 
+import type { ListT } from '.';
+
 type Props = {
-  addList: (list: any) => void,
+  addList: (list: ListT) => void,
 };
 
 const NewList = ({

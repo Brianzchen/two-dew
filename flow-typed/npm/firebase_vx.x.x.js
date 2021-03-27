@@ -44,34 +44,43 @@ declare module 'firebase/app' {
     |}) => void) => void,
   |}>;
 
-  declare type Firestore = () => ({|
-    collection: (collection: string) => ({|
-      add: ({ [key: string]: any }) => Promise<DocRef>,
-      doc: (id: string) => {|
-        get: () => Promise<{|
-          data: () => any,
-        |}>,
-        set: ({ [key: string]: any }) => Promise<DocRef>,
-        update: ({ [key: string]: any }) => Promise<DocRef>,
-      |},
+  declare type Firestore$Collection = (collection: string) => ({|
+    add: ({ [key: string]: any }) => Promise<DocRef>,
+    doc: (id: string) => {|
+      get: () => Promise<{|
+        data: () => any,
+      |}>,
+      set: ({ [key: string]: any }) => Promise<DocRef>,
+      update: ({ [key: string]: any }) => Promise<DocRef>,
+      collection: Firestore$Collection,
+    |},
+    get: Firestore$Get,
+    onSnapshot: ((snapshot: {|
+      forEach: (({|
+        id: string,
+        data: () => any,
+      |}) => void) => void,
+    |}) => void) => void,
+    where: (
+      field: string,
+      comparator: | '<'
+        | '<='
+        | '=='
+        | '>'
+        | '>='
+        | '!='
+        | 'array-contains'
+        | 'array-contains-any'
+        | 'in'
+        | 'not-in',
+      value: any,
+    ) => {|
       get: Firestore$Get,
-      where: (
-        field: string,
-        comparator: | '<'
-          | '<='
-          | '=='
-          | '>'
-          | '>='
-          | '!='
-          | 'array-contains'
-          | 'array-contains-any'
-          | 'in'
-          | 'not-in',
-        value: any,
-      ) => {|
-        get: Firestore$Get,
-      |}
-    |})
+    |}
+  |});
+
+  declare type Firestore = () => ({|
+    collection: Firestore$Collection,
   |});
 
   declare type InitializeApp = (config: FirebaseConfig) => void;
