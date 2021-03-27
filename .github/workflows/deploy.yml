@@ -34,6 +34,7 @@ jobs:
     - name: Tests
       run: |
         yarn install
+        yarn build
 
     - name: Install Surge
       run: npm install -g surge
