@@ -17,6 +17,7 @@ const Join = (): React.Node => {
 
   const handleCreateAccount = (e) => {
     e.preventDefault();
+    setError();
     firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
     }).catch((err) => {
       console.error(err);

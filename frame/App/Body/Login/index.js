@@ -58,6 +58,7 @@ const Login = (): React.Node => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setError();
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
     }).catch((err) => {
       console.error(err);
