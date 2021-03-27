@@ -39,3 +39,9 @@ jobs:
         yarn eslint .
         yarn flow
         yarn test
+
+    # - name: Install Surge
+    #   run: npm install -g surge
+
+    # - name: Deploy to Surge
+    #   run:  surge ./dist https://two-dew.surge.sh/ --token ${{secrets.SURGE}}
