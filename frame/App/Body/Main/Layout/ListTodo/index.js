@@ -32,7 +32,7 @@ const ListTodo = ({
         });
         setItems(newItems);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div>
