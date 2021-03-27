@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Box } from '@pkgs/components';
 import routes from '@pkgs/routes';
 import { useFirebase } from '@pkgs/utils';
-import { Box } from '@pkgs/components';
 
 export const loginJoinStyles = {
   form: {
