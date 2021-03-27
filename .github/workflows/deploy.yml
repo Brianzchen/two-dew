@@ -34,6 +34,9 @@ jobs:
     - name: Tests
       run: |
         yarn install
+        yarn eslint .
+        yarn flow
+        yarn test
         yarn build
 
     - name: Install Surge
