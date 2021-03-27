@@ -11,6 +11,7 @@ export type LayoutT = Array<{
 }>;
 
 export type ListT = {
+  id: string,
   name: string,
   owner: string,
   sharedWith: Array<string>,
@@ -37,7 +38,10 @@ const Main = (): React.Node => {
       firestore().collection('lists').where('owner', '==', user.uid).get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            handleAddNewListItem(doc.data());
+            handleAddNewListItem({
+              ...doc.data(),
+              id: doc.id,
+            });
           });
         })
         .catch((err) => {

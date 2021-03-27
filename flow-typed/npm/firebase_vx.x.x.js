@@ -39,6 +39,7 @@ declare module 'firebase/app' {
 
   declare type Firestore$Get = () => Promise<{|
     forEach: (({|
+      id: string,
       data: () => any,
     |}) => void) => void,
   |}>;

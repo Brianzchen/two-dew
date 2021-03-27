@@ -3,10 +3,8 @@ import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
 
-import type { ListT } from '.';
-
 type Props = {
-  addList: (list: ListT) => void,
+  addList: (list: any) => void,
 };
 
 const NewList = ({
@@ -26,7 +24,7 @@ const NewList = ({
         owner: user.uid,
         sharedWith: [],
         type: 'list',
-      }: ListT)).then((docRef) => {
+      })).then((docRef) => {
         db.doc(docRef.id).get().then((snapshot) => {
           addList(snapshot.data());
           setName('');

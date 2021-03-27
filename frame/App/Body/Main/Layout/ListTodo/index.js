@@ -1,9 +1,22 @@
 // @flow
 import * as React from 'react';
 
-const ListTodo = (): React.Node => (
+import type { ListT } from '../..';
+
+type Props = {
+  ...ListT,
+};
+
+const ListTodo = ({
+  id,
+  name,
+}: Props): React.Node => (
   <div>
-    a list should render here
+    {name}
+    List todo
+    <div>
+      {id}
+    </div>
   </div>
 );
 

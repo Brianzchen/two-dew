@@ -2,8 +2,8 @@
 import * as React from 'react';
 
 import type { ListT, LayoutT } from '..';
-// import DailyTodo from './DailyTodo';
-// import ListTodo from './ListTodo';
+import DailyTodo from './DailyTodo';
+import ListTodo from './ListTodo';
 
 type Props = {
   lists: Array<ListT>,
@@ -75,7 +75,26 @@ const Layout = ({
                   : (
                     <div>
                       <Dropdown />
-                      {listName}
+                      {(() => {
+                        const list = lists.find((o) => o.name === listName);
+
+                        if (list?.type === 'daily') {
+                          return (
+                            <DailyTodo
+                              {...list}
+                            />
+                          );
+                        }
+                        if (list?.type === 'list') {
+                          return (
+                            <ListTodo
+                              {...list}
+                            />
+                          );
+                        }
+
+                        return null;
+                      })()}
                     </div>
                   )}
               </div>
