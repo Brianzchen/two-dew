@@ -1,6 +1,8 @@
 // @flow
 import * as React from 'react';
 
+import { Box } from '@pkgs/components';
+
 import type { ListT, LayoutT } from '..';
 import DailyTodo from './DailyTodo';
 import ListTodo from './ListTodo';
@@ -34,46 +36,58 @@ const Layout = ({
   };
 
   return (
-    <>
+    <Box
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       {renderedLists.map(({ data }, i) => (
         // Renders lists downwards
-        <div
+        <Box
           // eslint-disable-next-line react/no-array-index-key
           key={i}
+          style={{
+            flex: 1,
+            display: 'flex',
+          }}
         >
           {data.map((listName, j) => {
             const Dropdown = () => (
-              <div>
-                <select
-                  onChange={(event) => {
-                    const name = event.currentTarget.value;
-                    updateLayoutList(i, j, name);
-                  }}
-                >
-                  <option defaultValue>
-                    {''}
+              <select
+                value={listName ?? ''}
+                onChange={(event) => {
+                  const name = event.currentTarget.value;
+                  updateLayoutList(i, j, name);
+                }}
+              >
+                <option defaultValue>
+                  {''}
+                </option>
+                {lists.map((o) => (
+                  <option key={o.name}>
+                    {o.name}
                   </option>
-                  {lists.map((o) => (
-                    <option key={o.name}>
-                      {o.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                ))}
+              </select>
             );
 
             return (
               // Renders lists sideways
-              <div
+              <Box
                 // eslint-disable-next-line react/no-array-index-key
                 key={j}
+                style={{
+                  flex: 1,
+                  maxWidth: '100%',
+                }}
               >
                 {!listName
                   ? (
                     <Dropdown />
                   )
                   : (
-                    <div>
+                    <>
                       <Dropdown />
                       {(() => {
                         const list = lists.find((o) => o.name === listName);
@@ -95,14 +109,14 @@ const Layout = ({
 
                         return null;
                       })()}
-                    </div>
+                    </>
                   )}
-              </div>
+              </Box>
             );
           })}
-        </div>
+        </Box>
       ))}
-    </>
+    </Box>
   );
 };
 

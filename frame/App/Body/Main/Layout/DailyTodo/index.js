@@ -7,6 +7,7 @@ import { Box } from '@pkgs/components';
 
 import type { ListT } from '../..';
 import AddItem from '../components/AddItem';
+import ListItem from '../components/ListItem';
 
 import Column from './Column';
 
@@ -16,7 +17,6 @@ type Props = {
 
 const DailyTodo = ({
   id,
-  name,
 }: Props): React.Node => {
   const [items, setItems] = React.useState([]);
 
@@ -33,39 +33,31 @@ const DailyTodo = ({
   });
 
   return (
-    <div>
-      {name}
-      Daily todo list
-      <div>
-        {id}
-      </div>
-      <Box
-        style={{
-          display: 'flex',
-          overflow: 'auto',
-        }}
-      >
-        {/** this range should change based on responsive design */}
-        {mapItemsToDays.map((o) => (
-          <Column
-            key={o.day}
+    <Box
+      style={{
+        display: 'flex',
+        overflow: 'auto',
+      }}
+    >
+      {/** this range should change based on responsive design */}
+      {mapItemsToDays.map((o) => (
+        <Column
+          key={o.day}
+          day={o.day}
+        >
+          <AddItem
+            listId={id}
             day={o.day}
-          >
-            <AddItem
-              listId={id}
-              day={o.day}
+          />
+          {o.items.map((i) => (
+            <ListItem
+              key={i.id}
+              {...i}
             />
-            {o.items.map((i) => (
-              <div
-                key={i.id}
-              >
-                {i.name}
-              </div>
-            ))}
-          </Column>
-        ))}
-      </Box>
-    </div>
+          ))}
+        </Column>
+      ))}
+    </Box>
   );
 };
 

@@ -13,7 +13,6 @@ type Props = {
 
 const ListTodo = ({
   id,
-  name,
 }: Props): React.Node => {
   const [items, setItems] = React.useState([]);
 
@@ -23,11 +22,6 @@ const ListTodo = ({
 
   return (
     <div>
-      {name}
-      List todo
-      <div>
-        {id}
-      </div>
       <AddItem
         listId={id}
       />
