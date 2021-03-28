@@ -42,6 +42,7 @@ const DailyTodo = ({
       <Box
         style={{
           display: 'flex',
+          overflow: 'auto',
         }}
       >
         {/** this range should change based on responsive design */}
