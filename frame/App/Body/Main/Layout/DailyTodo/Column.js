@@ -33,15 +33,29 @@ const Column = ({
   children = null,
   day,
 }: Props): React.Node => {
-  const style = {
-    flex: 1,
+  const isToday = new Date().getDay() === day;
+
+  const styles = {
+    container: {
+      flex: 1,
+      border: `1px solid ${isToday ? 'red' : '#cccccc'}`,
+    },
+    header: {
+      padding: '8px',
+      fontSize: '20px',
+      fontWeight: 600,
+      ...isToday && {
+        backgroundColor: 'red',
+        color: 'white',
+      },
+    },
   };
 
   return (
-    <Box style={style}>
-      <div>
+    <Box style={styles.container}>
+      <Box style={styles.header}>
         {mapValueToDay(day)}
-      </div>
+      </Box>
       {children}
     </Box>
   );
