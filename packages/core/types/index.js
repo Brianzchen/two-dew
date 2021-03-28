@@ -6,3 +6,11 @@ export type ListItemT = {
   completed: boolean,
   day: number,
 };
+
+export type ListT = {
+  id: string,
+  name: string,
+  owner: string,
+  sharedWith: Array<string>,
+  type: 'list' | 'daily',
+};

@@ -2,8 +2,7 @@
 import * as React from 'react';
 
 import { useGetListItems } from '@core/service';
-
-import type { ListT } from '../..';
+import type { ListT } from '@core/types';
 
 import AddItem from '../components/AddItem';
 

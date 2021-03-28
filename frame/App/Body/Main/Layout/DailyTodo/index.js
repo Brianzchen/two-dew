@@ -3,9 +3,9 @@ import * as React from 'react';
 import { range } from 'lodash';
 
 import { useGetListItems } from '@core/service';
+import type { ListT } from '@core/types';
 import { Box } from '@pkgs/components';
 
-import type { ListT } from '../..';
 import AddItem from '../components/AddItem';
 import ListItem from '../components/ListItem';
 

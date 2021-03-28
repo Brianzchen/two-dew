@@ -3,20 +3,12 @@ import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
 
-import NewList from './NewList';
 import Layout from './Layout';
+import Options from './Options';
 
 export type LayoutT = Array<{
   data: Array<string>,
 }>;
-
-export type ListT = {
-  id: string,
-  name: string,
-  owner: string,
-  sharedWith: Array<string>,
-  type: 'list' | 'daily',
-};
 
 const Main = (): React.Node => {
   const { auth, firestore } = useFirebase();
@@ -87,7 +79,9 @@ const Main = (): React.Node => {
 
   return (
     <>
-      <NewList addList={handleAddNewListItem} />
+      <Options
+        handleAddNewListItem={handleAddNewListItem}
+      />
       {renderedLists && (
         <Layout
           lists={lists}

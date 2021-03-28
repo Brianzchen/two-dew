@@ -1,9 +1,10 @@
 // @flow
 import * as React from 'react';
 
+import type { ListT } from '@core/types';
 import { Box } from '@pkgs/components';
 
-import type { ListT, LayoutT } from '..';
+import type { LayoutT } from '..';
 import DailyTodo from './DailyTodo';
 import ListTodo from './ListTodo';
 

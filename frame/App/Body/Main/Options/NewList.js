@@ -1,9 +1,8 @@
 // @flow
 import * as React from 'react';
 
+import type { ListT } from '@core/types';
 import { useFirebase } from '@pkgs/utils';
-
-import type { ListT } from '.';
 
 type Props = {
   addList: (list: ListT) => void,
