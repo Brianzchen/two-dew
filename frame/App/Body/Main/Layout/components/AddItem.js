@@ -6,11 +6,13 @@ import { useFirebase } from '@pkgs/utils';
 
 type Props = {
   listId: string,
+  day?: number,
   addItem?: (item: ListItemT) => void,
 };
 
 const AddItem = ({
   listId,
+  day,
   addItem,
 }: Props): React.Node => {
   const { firestore } = useFirebase();
@@ -22,7 +24,7 @@ const AddItem = ({
       name: value,
       description: '',
       completed: false,
-      day: new Date().getDay(),
+      day: day ?? new Date().getDay(),
     };
 
     firestore().collection('lists').doc(listId).collection('items')
@@ -37,7 +39,11 @@ const AddItem = ({
   };
 
   return (
-    <div>
+    <div
+      style={{
+        overflow: 'auto',
+      }}
+    >
       <input
         value={value}
         onChange={(e) => {

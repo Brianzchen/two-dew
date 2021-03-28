@@ -39,9 +39,6 @@ const DailyTodo = ({
       <div>
         {id}
       </div>
-      <AddItem
-        listId={id}
-      />
       <Box
         style={{
           display: 'flex',
@@ -53,6 +50,10 @@ const DailyTodo = ({
             key={o.day}
             day={o.day}
           >
+            <AddItem
+              listId={id}
+              day={o.day}
+            />
             {o.items.map((i) => (
               <div
                 key={i.id}
