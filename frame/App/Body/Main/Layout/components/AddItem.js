@@ -53,6 +53,7 @@ const AddItem = ({
       <button
         type="button"
         onClick={addNewTodoItem}
+        disabled={value.length === 0}
       >
         Add New Item
       </button>
