@@ -19,6 +19,7 @@ const DailyTodo = ({
   id,
 }: Props): React.Node => {
   const [items, setItems] = React.useState([]);
+  const [showCompleted, setShowCompleted] = React.useState(false);
 
   const mapItemsToDays = range(0, 7).map((o) => {
     const dayItems = items.filter((i) => i.day === o);
@@ -30,34 +31,49 @@ const DailyTodo = ({
 
   useGetListItems(id, (newItems) => {
     setItems(newItems);
+  }, {
+    completed: showCompleted,
   });
 
   return (
-    <Box
-      style={{
-        display: 'flex',
-        overflow: 'auto',
-      }}
-    >
-      {/** this range should change based on responsive design */}
-      {mapItemsToDays.map((o) => (
-        <Column
-          key={o.day}
-          day={o.day}
-        >
-          <AddItem
-            listId={id}
+    <>
+      <div>
+        Show completed
+        <input
+          value={showCompleted}
+          onChange={() => {
+            setShowCompleted((pShowCompleted) => !pShowCompleted);
+          }}
+          type="checkbox"
+        />
+      </div>
+      <Box
+        style={{
+          display: 'flex',
+          overflow: 'auto',
+        }}
+      >
+        {/** this range should change based on responsive design */}
+        {mapItemsToDays.map((o) => (
+          <Column
+            key={o.day}
             day={o.day}
-          />
-          {o.items.map((i) => (
-            <ListItem
-              key={i.id}
-              {...i}
+          >
+            <AddItem
+              listId={id}
+              day={o.day}
             />
-          ))}
-        </Column>
-      ))}
-    </Box>
+            {o.items.map((i) => (
+              <ListItem
+                key={i.id}
+                listId={id}
+                {...i}
+              />
+            ))}
+          </Column>
+        ))}
+      </Box>
+    </>
   );
 };
 
