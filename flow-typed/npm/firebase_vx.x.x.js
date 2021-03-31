@@ -37,36 +37,50 @@ declare module 'firebase/app' {
     id: string,
   |};
 
-  declare type Firestore$Get = () => Promise<Array<{|
-    data: () => any,
-  |}>>;
+  declare type Firestore$Get = () => Promise<{|
+    forEach: (({|
+      id: string,
+      data: () => any,
+    |}) => void) => void,
+  |}>;
+
+  declare type Firestore$Collection = (collection: string) => ({|
+    add: ({ [key: string]: any }) => Promise<DocRef>,
+    doc: (id: string) => {|
+      get: () => Promise<{|
+        data: () => any,
+      |}>,
+      set: ({ [key: string]: any }) => Promise<DocRef>,
+      update: ({ [key: string]: any }) => Promise<DocRef>,
+      collection: Firestore$Collection,
+    |},
+    get: Firestore$Get,
+    onSnapshot: ((snapshot: {|
+      forEach: (({|
+        id: string,
+        data: () => any,
+      |}) => void) => void,
+    |}) => void) => void,
+    where: (
+      field: string,
+      comparator: | '<'
+        | '<='
+        | '=='
+        | '>'
+        | '>='
+        | '!='
+        | 'array-contains'
+        | 'array-contains-any'
+        | 'in'
+        | 'not-in',
+      value: any,
+    ) => {|
+      get: Firestore$Get,
+    |}
+  |});
 
   declare type Firestore = () => ({|
-    collection: (collection: string) => ({|
-      add: ({ [key: string]: any }) => Promise<DocRef>,
-      doc: (id: string) => {|
-        get: () => Promise<{|
-          data: () => any,
-        |}>,
-      |},
-      get: Firestore$Get,
-      where: (
-        field: string,
-        comparator: | '<'
-          | '<='
-          | '=='
-          | '>'
-          | '>='
-          | '!='
-          | 'array-contains'
-          | 'array-contains-any'
-          | 'in'
-          | 'not-in',
-        value: any,
-      ) => {|
-        get: Firestore$Get,
-      |}
-    |})
+    collection: Firestore$Collection,
   |});
 
   declare type InitializeApp = (config: FirebaseConfig) => void;

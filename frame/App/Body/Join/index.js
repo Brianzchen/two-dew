@@ -2,8 +2,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Box } from '@pkgs/components';
 import routes from '@pkgs/routes';
 import { useFirebase } from '@pkgs/utils';
+
+import { loginJoinStyles } from '../Login';
 
 const Join = (): React.Node => {
   const firebase = useFirebase();
@@ -14,6 +17,7 @@ const Join = (): React.Node => {
 
   const handleCreateAccount = (e) => {
     e.preventDefault();
+    setError();
     firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
     }).catch((err) => {
       console.error(err);
@@ -24,37 +28,48 @@ const Join = (): React.Node => {
   return (
     <form
       onSubmit={handleCreateAccount}
+      style={loginJoinStyles.form}
     >
       <h1>
         Join
       </h1>
       <input
         value={email}
+        placeholder="Email"
         onChange={(e) => {
           setEmail(e.currentTarget.value);
         }}
+        style={loginJoinStyles.input}
         type="email"
         autoComplete="username"
       />
       <input
         value={password}
+        placeholder="Password"
         onChange={(e) => {
           setPassword(e.currentTarget.value);
         }}
+        style={loginJoinStyles.input}
         type="password"
         autoComplete="current-password"
       />
       {error && (
-        <div>
+        <Box style={loginJoinStyles.error}>
           {error}
-        </div>
+        </Box>
       )}
-      <button type="submit">
+      <button
+        type="submit"
+        style={loginJoinStyles.submitButton}
+      >
         Create Account
       </button>
-      <Link to={routes.login}>
-        go to login
-      </Link>
+      <Box style={loginJoinStyles.inline}>
+        <p>Already have an account?</p>
+        <Box as={Link} to={routes.login} style={loginJoinStyles.link}>
+          Login
+        </Box>
+      </Box>
     </form>
   );
 };

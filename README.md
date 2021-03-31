@@ -1,5 +1,35 @@
 # two-dew
 
+![Build](https://github.com/brianzchen/two-dew/workflows/Deploy/badge.svg)
+
+Open sourced todo app because I don't want to pay for the real thing
+
+## Database structure
+
+We're using Cloud Firestore from Google, they structure their storage into databases -> collections -> documents
+
+```
+authentication
+  - user
+    email: string
+
+two-dew
+  - lists (uid)
+    - name: string
+    - owner: string (user id)
+    - sharedWith: Array<string> (others user id)
+    - type: 'list' | 'daily'
+    - items: SubCollection
+      - name: string
+      - description: string
+      - completed: boolean
+      - day: 0 -> 6 (days of the week starting at Sunday)
+  - users
+    - layout: Array<{ data: Array<string> }> (2d array layout of app)
+```
+
+---
+
 Fractal based design pattern for large scaled applications with many teams.
 
 ## Structure objective

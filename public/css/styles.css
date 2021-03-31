@@ -19,8 +19,14 @@ button {
   outline: none;
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 div {
   box-sizing: border-box;
+}
+
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
 }
