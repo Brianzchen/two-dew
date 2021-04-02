@@ -44,6 +44,13 @@ declare module 'firebase/app' {
     |}) => void) => void,
   |}>;
 
+  declare type Firestore$Snapshot = ((snapshot: {|
+    forEach: (({|
+      id: string,
+      data: () => any,
+    |}) => void) => void,
+  |}) => void) => void;
+
   declare type Firestore$Collection = (collection: string) => ({|
     add: ({ [key: string]: any }) => Promise<DocRef>,
     doc: (id: string) => {|
@@ -55,12 +62,7 @@ declare module 'firebase/app' {
       collection: Firestore$Collection,
     |},
     get: Firestore$Get,
-    onSnapshot: ((snapshot: {|
-      forEach: (({|
-        id: string,
-        data: () => any,
-      |}) => void) => void,
-    |}) => void) => void,
+    onSnapshot: Firestore$Snapshot,
     where: (
       field: string,
       comparator: | '<'
@@ -76,6 +78,7 @@ declare module 'firebase/app' {
       value: any,
     ) => {|
       get: Firestore$Get,
+      onSnapshot: Firestore$Snapshot,
     |}
   |});
 
