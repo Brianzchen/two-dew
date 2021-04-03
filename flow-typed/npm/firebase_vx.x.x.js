@@ -59,6 +59,7 @@ declare module 'firebase/app' {
       |}>,
       set: ({ [key: string]: any }) => Promise<DocRef>,
       update: ({ [key: string]: any }) => Promise<DocRef>,
+      delete: () => Promise<void>,
       collection: Firestore$Collection,
     |},
     get: Firestore$Get,

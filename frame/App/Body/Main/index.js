@@ -24,6 +24,10 @@ const Main = (): React.Node => {
     ]);
   };
 
+  const handleListDeletion = (listId: string) => {
+    setLists((pLists) => pLists.filter((o) => o.id !== listId));
+  };
+
   React.useEffect(() => {
     if (user) {
       // Get all lists belonging to owner
@@ -88,6 +92,7 @@ const Main = (): React.Node => {
           renderedLists={renderedLists}
           // $FlowExpectedError[incompatible-type]
           setRenderedLists={setRenderedLists}
+          onListDeletion={handleListDeletion}
         />
       )}
     </>

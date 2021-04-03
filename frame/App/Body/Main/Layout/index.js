@@ -6,18 +6,21 @@ import { Box } from '@pkgs/components';
 
 import type { LayoutT } from '..';
 import DailyTodo from './DailyTodo';
+import DeleteList from './DeleteList';
 import ListTodo from './ListTodo';
 
 type Props = {
   lists: Array<ListT>,
   renderedLists: LayoutT,
   setRenderedLists: ((LayoutT) => LayoutT) => void,
+  onListDeletion: (listId: string) => void,
 };
 
 const Layout = ({
   lists,
   renderedLists,
   setRenderedLists,
+  onListDeletion,
 }: Props): React.Node => {
   const updateLayoutList = (posY, posX, newName) => {
     setRenderedLists((pRenderedLists) => (
@@ -95,16 +98,28 @@ const Layout = ({
 
                         if (list?.type === 'daily') {
                           return (
-                            <DailyTodo
-                              {...list}
-                            />
+                            <>
+                              <DeleteList
+                                listId={list.id}
+                                onListDeletion={onListDeletion}
+                              />
+                              <DailyTodo
+                                {...list}
+                              />
+                            </>
                           );
                         }
                         if (list?.type === 'list') {
                           return (
-                            <ListTodo
-                              {...list}
-                            />
+                            <>
+                              <DeleteList
+                                listId={list.id}
+                                onListDeletion={onListDeletion}
+                              />
+                              <ListTodo
+                                {...list}
+                              />
+                            </>
                           );
                         }
 

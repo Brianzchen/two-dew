@@ -28,8 +28,8 @@ export const useGetListItems = (
       callback(newItems);
     };
 
-    if (options.completed) {
-      itemCollection.where('completed', '==', true).onSnapshot((snapshot) => {
+    if (!options.completed) {
+      itemCollection.where('completed', '==', false).onSnapshot((snapshot) => {
         updateItems(snapshot);
       });
     } else {
