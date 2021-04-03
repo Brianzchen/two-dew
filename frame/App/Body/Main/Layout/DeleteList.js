@@ -37,7 +37,6 @@ const DeleteList = ({
     firestore().collection('lists').doc(listId).delete()
       .then(() => {
         onListDeletion(listId);
-        setConfirmDelete(false);
       })
       .catch((err) => {
         console.error(err);

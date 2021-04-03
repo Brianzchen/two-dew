@@ -31,7 +31,13 @@ const App = (): React.Node => {
   }
 
   return (
-    <Box>
+    <Box
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Header />
       <Body />
     </Box>

@@ -85,6 +85,7 @@ const Main = (): React.Node => {
     <>
       <Options
         handleAddNewListItem={handleAddNewListItem}
+        setRenderedLists={setRenderedLists}
       />
       {renderedLists && (
         <Layout
