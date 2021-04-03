@@ -64,6 +64,21 @@ const SelectLayout = ({
             >
               {'[[\'\'], [\'\']]'}
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                setRenderedLists([
+                  {
+                    data: [''],
+                  },
+                  {
+                    data: ['', ''],
+                  },
+                ]);
+              }}
+            >
+              {'[[\'\'], [\'\', \'\']]'}
+            </button>
           </div>
         )}
       </div>
