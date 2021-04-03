@@ -17,7 +17,7 @@ const Main = (): React.Node => {
   const [lists, setLists] = React.useState([]);
   const [renderedLists, setRenderedLists] = React.useState<LayoutT | void>();
 
-  const handleAddNewListItem = (list) => {
+  const handleAddNewList = (list) => {
     setLists((pLists) => [
       ...pLists,
       list,
@@ -34,7 +34,7 @@ const Main = (): React.Node => {
       firestore().collection('lists').where('owner', '==', user.uid).get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            handleAddNewListItem({
+            handleAddNewList({
               ...doc.data(),
               id: doc.id,
             });
@@ -84,7 +84,7 @@ const Main = (): React.Node => {
   return (
     <>
       <Options
-        handleAddNewListItem={handleAddNewListItem}
+        handleAddNewList={handleAddNewList}
         setRenderedLists={setRenderedLists}
       />
       {renderedLists && (

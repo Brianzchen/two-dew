@@ -8,16 +8,16 @@ import NewList from './NewList';
 import SelectLayout from './SelectLayout';
 
 type Props = {
-  handleAddNewListItem: (list: ListT) => void,
+  handleAddNewList: (list: ListT) => void,
   setRenderedLists: (LayoutT) => void,
 };
 
 const Options = ({
-  handleAddNewListItem,
+  handleAddNewList,
   setRenderedLists,
 }: Props): React.Node => (
   <>
-    <NewList addList={handleAddNewListItem} />
+    <NewList addList={handleAddNewList} />
     <SelectLayout setRenderedLists={setRenderedLists} />
   </>
 );
