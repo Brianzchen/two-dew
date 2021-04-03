@@ -44,12 +44,14 @@ declare module 'firebase/app' {
     |}) => void) => void,
   |}>;
 
+  declare type Firestore$Unsubscribe = () => void;
+
   declare type Firestore$Snapshot = ((snapshot: {|
     forEach: (({|
       id: string,
       data: () => any,
     |}) => void) => void,
-  |}) => void) => void;
+  |}) => void) => Firestore$Unsubscribe;
 
   declare type Firestore$Collection = (collection: string) => ({|
     add: ({ [key: string]: any }) => Promise<DocRef>,

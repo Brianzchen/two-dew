@@ -28,14 +28,20 @@ export const useGetListItems = (
       callback(newItems);
     };
 
+    let unsubscribe;
+
     if (!options.completed) {
-      itemCollection.where('completed', '==', false).onSnapshot((snapshot) => {
+      unsubscribe = itemCollection.where('completed', '==', false).onSnapshot((snapshot) => {
         updateItems(snapshot);
       });
     } else {
-      itemCollection.onSnapshot((snapshot) => {
+      unsubscribe = itemCollection.onSnapshot((snapshot) => {
         updateItems(snapshot);
       });
     }
+
+    return () => {
+      unsubscribe && unsubscribe();
+    };
   }, [listId, options.completed]);
 };
