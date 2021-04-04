@@ -14,9 +14,12 @@ const ListItem = ({
   id,
   name,
   completed,
+  // priority,
   listId,
 }: Props): React.Node => {
   const firebase = useFirebase();
+
+  const [priority, setPriority] = React.useState('true');
 
   const markCompleted = () => {
     firebase.firestore().collection('lists').doc(listId).collection('items')
@@ -31,11 +34,24 @@ const ListItem = ({
       .doc(id)
       .delete();
   };
+  const markPriority = () => {
+    // firebase.firestore().collection('lists').doc(listId).collection('items')
+    //   .doc(id)
+    //   .update({
+    //     priority: !priority,
+    //  });
+    if (priority === true) {
+      setPriority(false);
+    } else {
+      setPriority(true);
+    }
+  };
 
   const styles = {
     container: {
       borderTop: '1px solid #cccccc',
       textDecoration: completed ? 'line-through' : 'initial',
+      backgroundColor: priority ? 'grey' : null,
     },
   };
 
@@ -62,6 +78,12 @@ const ListItem = ({
           />
         </button>
       )}
+      <button
+        type="button"
+        onClick={markPriority}
+      >
+        {priority ? <Icon icon="flag-variant" /> : <Icon icon="flag-variant-outline" />}
+      </button>
     </Box>
   );
 };
