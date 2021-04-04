@@ -22,8 +22,14 @@ const ListItem = ({
     firebase.firestore().collection('lists').doc(listId).collection('items')
       .doc(id)
       .update({
-        completed: true,
+        completed: !completed,
       });
+  };
+
+  const deleteItem = () => {
+    firebase.firestore().collection('lists').doc(listId).collection('items')
+      .doc(id)
+      .delete();
   };
 
   const styles = {
@@ -46,6 +52,16 @@ const ListItem = ({
           icon="check"
         />
       </button>
+      {completed && (
+        <button
+          type="button"
+          onClick={deleteItem}
+        >
+          <Icon
+            icon="delete"
+          />
+        </button>
+      )}
     </Box>
   );
 };

@@ -5,6 +5,7 @@ import { useGetListItems } from '@core/service';
 import type { ListT } from '@core/types';
 
 import AddItem from '../components/AddItem';
+import ListItem from '../components/ListItem';
 
 type Props = {
   ...ListT,
@@ -13,23 +14,34 @@ type Props = {
 const ListTodo = ({
   id,
 }: Props): React.Node => {
+  const [showCompleted, setShowCompleted] = React.useState(false);
   const [items, setItems] = React.useState([]);
 
   useGetListItems(id, (newItems) => {
     setItems(newItems);
-  });
+  }, { completed: showCompleted });
 
   return (
     <div>
+      <div>
+        <input
+          value={showCompleted}
+          onChange={() => {
+            setShowCompleted((pShowCompleted) => !pShowCompleted);
+          }}
+          type="checkbox"
+        />
+        show completed
+      </div>
       <AddItem
         listId={id}
       />
       {items.map((o) => (
-        <div
+        <ListItem
           key={o.id}
-        >
-          {o.name}
-        </div>
+          {...o}
+          listId={id}
+        />
       ))}
     </div>
   );

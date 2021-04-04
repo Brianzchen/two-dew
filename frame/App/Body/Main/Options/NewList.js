@@ -28,7 +28,10 @@ const NewList = ({
         type,
       })).then((docRef) => {
         db.doc(docRef.id).get().then((snapshot) => {
-          addList(snapshot.data());
+          addList({
+            ...snapshot.data(),
+            id: docRef.id,
+          });
           setName('');
         });
       });

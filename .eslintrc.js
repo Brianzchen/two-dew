@@ -22,6 +22,14 @@ module.exports = {
   },
   rules: {
     camelcase: 0,
+    'max-len': ['error', 100, 2, {
+      ignoreUrls: true,
+      ignoreComments: true,
+      ignoreRegExpLiterals: true,
+      ignoreStrings: true,
+      ignoreTemplateLiterals: true,
+      ignorePattern: '^.*React\\$AbstractComponent.*',
+    }],
     'no-underscore-dangle': 0,
     'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
     'import/order': [

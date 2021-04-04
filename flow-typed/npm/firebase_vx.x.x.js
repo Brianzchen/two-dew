@@ -44,6 +44,15 @@ declare module 'firebase/app' {
     |}) => void) => void,
   |}>;
 
+  declare type Firestore$Unsubscribe = () => void;
+
+  declare type Firestore$Snapshot = ((snapshot: {|
+    forEach: (({|
+      id: string,
+      data: () => any,
+    |}) => void) => void,
+  |}) => void) => Firestore$Unsubscribe;
+
   declare type Firestore$Collection = (collection: string) => ({|
     add: ({ [key: string]: any }) => Promise<DocRef>,
     doc: (id: string) => {|
@@ -52,15 +61,11 @@ declare module 'firebase/app' {
       |}>,
       set: ({ [key: string]: any }) => Promise<DocRef>,
       update: ({ [key: string]: any }) => Promise<DocRef>,
+      delete: () => Promise<void>,
       collection: Firestore$Collection,
     |},
     get: Firestore$Get,
-    onSnapshot: ((snapshot: {|
-      forEach: (({|
-        id: string,
-        data: () => any,
-      |}) => void) => void,
-    |}) => void) => void,
+    onSnapshot: Firestore$Snapshot,
     where: (
       field: string,
       comparator: | '<'
@@ -76,6 +81,7 @@ declare module 'firebase/app' {
       value: any,
     ) => {|
       get: Firestore$Get,
+      onSnapshot: Firestore$Snapshot,
     |}
   |});
 

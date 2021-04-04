@@ -17,11 +17,15 @@ const Main = (): React.Node => {
   const [lists, setLists] = React.useState([]);
   const [renderedLists, setRenderedLists] = React.useState<LayoutT | void>();
 
-  const handleAddNewListItem = (list) => {
+  const handleAddNewList = (list) => {
     setLists((pLists) => [
       ...pLists,
       list,
     ]);
+  };
+
+  const handleListDeletion = (listId: string) => {
+    setLists((pLists) => pLists.filter((o) => o.id !== listId));
   };
 
   React.useEffect(() => {
@@ -30,7 +34,7 @@ const Main = (): React.Node => {
       firestore().collection('lists').where('owner', '==', user.uid).get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            handleAddNewListItem({
+            handleAddNewList({
               ...doc.data(),
               id: doc.id,
             });
@@ -80,7 +84,8 @@ const Main = (): React.Node => {
   return (
     <>
       <Options
-        handleAddNewListItem={handleAddNewListItem}
+        handleAddNewList={handleAddNewList}
+        setRenderedLists={setRenderedLists}
       />
       {renderedLists && (
         <Layout
@@ -88,6 +93,7 @@ const Main = (): React.Node => {
           renderedLists={renderedLists}
           // $FlowExpectedError[incompatible-type]
           setRenderedLists={setRenderedLists}
+          onListDeletion={handleListDeletion}
         />
       )}
     </>

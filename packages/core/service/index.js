@@ -15,19 +15,33 @@ export const useGetListItems = (
   const { firestore } = useFirebase();
 
   React.useEffect(() => {
-    firestore().collection('lists').doc(listId).collection('items')
-      .onSnapshot((snapshot) => {
-        const newItems = [];
-        snapshot.forEach((shot) => {
-          const data = shot.data();
-          if (!options.completed && data.completed) return;
+    const itemCollection = (() => firestore().collection('lists').doc(listId).collection('items'))();
 
-          newItems.push({
-            ...shot.data(),
-            id: shot.id,
-          });
+    const updateItems = (snapshot) => {
+      const newItems = [];
+      snapshot.forEach((shot) => {
+        newItems.push({
+          ...shot.data(),
+          id: shot.id,
         });
-        callback(newItems);
       });
+      callback(newItems);
+    };
+
+    let unsubscribe;
+
+    if (!options.completed) {
+      unsubscribe = itemCollection.where('completed', '==', false).onSnapshot((snapshot) => {
+        updateItems(snapshot);
+      });
+    } else {
+      unsubscribe = itemCollection.onSnapshot((snapshot) => {
+        updateItems(snapshot);
+      });
+    }
+
+    return () => {
+      unsubscribe && unsubscribe();
+    };
   }, [listId, options.completed]);
 };
