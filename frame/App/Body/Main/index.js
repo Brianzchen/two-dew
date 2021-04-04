@@ -28,6 +28,20 @@ const Main = (): React.Node => {
     setLists((pLists) => pLists.filter((o) => o.id !== listId));
   };
 
+  const handleListUpdate = (listId, updates) => {
+    setLists((pLists) => pLists.map((o) => {
+      if (o.id === listId) {
+        // $FlowExpectedError[cannot-spread-inexact]
+        return {
+          ...o,
+          ...updates,
+        };
+      }
+
+      return o;
+    }));
+  };
+
   React.useEffect(() => {
     if (user) {
       // Get all lists belonging to owner
@@ -94,6 +108,7 @@ const Main = (): React.Node => {
           // $FlowExpectedError[incompatible-type]
           setRenderedLists={setRenderedLists}
           onListDeletion={handleListDeletion}
+          onListUpdate={handleListUpdate}
         />
       )}
     </>

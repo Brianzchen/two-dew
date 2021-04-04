@@ -8,12 +8,14 @@ import type { LayoutT } from '..';
 import DailyTodo from './DailyTodo';
 import DeleteList from './DeleteList';
 import ListTodo from './ListTodo';
+import Rename from './Rename';
 
 type Props = {
   lists: Array<ListT>,
   renderedLists: LayoutT,
   setRenderedLists: ((LayoutT) => LayoutT) => void,
   onListDeletion: (listId: string) => void,
+  onListUpdate: (listId: string, updates: { ... }) => void,
 };
 
 const Layout = ({
@@ -21,6 +23,7 @@ const Layout = ({
   renderedLists,
   setRenderedLists,
   onListDeletion,
+  onListUpdate,
 }: Props): React.Node => {
   const updateLayoutList = (posY, posX, newName) => {
     setRenderedLists((pRenderedLists) => (
@@ -93,13 +96,17 @@ const Layout = ({
                   )
                   : (
                     <>
-                      <Dropdown />
                       {(() => {
                         const list = lists.find((o) => o.name === listName);
 
                         if (list?.type === 'daily') {
                           return (
                             <>
+                              <Dropdown />
+                              <Rename
+                                listId={list.id}
+                                onListUpdate={onListUpdate}
+                              />
                               <DeleteList
                                 listId={list.id}
                                 onListDeletion={onListDeletion}
@@ -113,6 +120,11 @@ const Layout = ({
                         if (list?.type === 'list') {
                           return (
                             <>
+                              <Dropdown />
+                              <Rename
+                                listId={list.id}
+                                onListUpdate={onListUpdate}
+                              />
                               <DeleteList
                                 listId={list.id}
                                 onListDeletion={onListDeletion}
