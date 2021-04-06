@@ -33,7 +33,19 @@ const Column = ({
   children = null,
   day,
 }: Props): React.Node => {
-  const isToday = new Date().getDay() === day;
+  const [isToday, setIsToday] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleIsToday = () => {
+      setIsToday(new Date().getDay() === day);
+    };
+    handleIsToday();
+    const timeout = setTimeout(handleIsToday, 60000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
 
   const styles = {
     container: {
