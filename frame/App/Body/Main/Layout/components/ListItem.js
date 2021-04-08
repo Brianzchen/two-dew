@@ -8,12 +8,14 @@ import { useFirebase } from '@pkgs/utils';
 type Props = {
   ...ListItemT,
   listId: string,
+  priority: boolean,
 };
 
 const ListItem = ({
   id,
   name,
   completed,
+  priority,
   listId,
 }: Props): React.Node => {
   const firebase = useFirebase();
@@ -36,6 +38,7 @@ const ListItem = ({
     container: {
       borderTop: '1px solid #cccccc',
       textDecoration: completed ? 'line-through' : 'initial',
+      backgroundColor: priority ? 'grey' : undefined,
     },
   };
 
@@ -62,6 +65,8 @@ const ListItem = ({
           />
         </button>
       )}
+      {priority && <Icon icon="flag-variant" />}
+
     </Box>
   );
 };
