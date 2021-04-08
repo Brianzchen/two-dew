@@ -21,15 +21,13 @@ const AddItem = ({
   const [value, setValue] = React.useState('');
   const [priority, setPriority] = React.useState(false);
 
-  const itemPriority = priority;
-
   const addNewTodoItem = () => {
     const newItem = {
       name: value,
       description: '',
       completed: false,
       day: day ?? new Date().getDay(),
-      priority: itemPriority,
+      priority,
     };
 
     firestore().collection('lists').doc(listId).collection('items')
@@ -42,14 +40,6 @@ const AddItem = ({
         setValue('');
         setPriority(false);
       });
-  };
-
-  const markPriority = () => {
-    if (priority === true) {
-      setPriority(false);
-    } else {
-      setPriority(true);
-    }
   };
 
   return (
@@ -74,9 +64,11 @@ const AddItem = ({
       <button
         type="button"
         disabled={value.length === 0}
-        onClick={markPriority}
+        onClick={() => {
+          setPriority((pPriority) => !pPriority);
+        }}
       >
-        {priority ? <Icon icon="flag-variant" /> : <Icon icon="flag-variant-outline" />}
+        <Icon icon={priority ? 'flag-variant' : 'flag-variant-outline'} />
       </button>
 
     </div>

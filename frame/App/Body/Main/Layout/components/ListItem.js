@@ -38,7 +38,7 @@ const ListItem = ({
     container: {
       borderTop: '1px solid #cccccc',
       textDecoration: completed ? 'line-through' : 'initial',
-      backgroundColor: priority ? 'grey' : null,
+      backgroundColor: priority ? 'grey' : undefined,
     },
   };
 
@@ -65,7 +65,7 @@ const ListItem = ({
           />
         </button>
       )}
-      {priority ? <Icon icon="flag-variant" /> : null}
+      {priority && <Icon icon="flag-variant" />}
 
     </Box>
   );
