@@ -5,7 +5,7 @@ export type ListItemT = {
   description: string,
   completed: boolean,
   day: number,
-  // priority: boolean,
+  priority: boolean,
 };
 
 export type ListT = {

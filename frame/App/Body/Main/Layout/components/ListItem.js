@@ -8,18 +8,17 @@ import { useFirebase } from '@pkgs/utils';
 type Props = {
   ...ListItemT,
   listId: string,
+  priority: boolean,
 };
 
 const ListItem = ({
   id,
   name,
   completed,
-  // priority,
+  priority,
   listId,
 }: Props): React.Node => {
   const firebase = useFirebase();
-
-  const [priority, setPriority] = React.useState('true');
 
   const markCompleted = () => {
     firebase.firestore().collection('lists').doc(listId).collection('items')
@@ -33,18 +32,6 @@ const ListItem = ({
     firebase.firestore().collection('lists').doc(listId).collection('items')
       .doc(id)
       .delete();
-  };
-  const markPriority = () => {
-    // firebase.firestore().collection('lists').doc(listId).collection('items')
-    //   .doc(id)
-    //   .update({
-    //     priority: !priority,
-    //  });
-    if (priority === true) {
-      setPriority(false);
-    } else {
-      setPriority(true);
-    }
   };
 
   const styles = {
@@ -78,12 +65,8 @@ const ListItem = ({
           />
         </button>
       )}
-      <button
-        type="button"
-        onClick={markPriority}
-      >
-        {priority ? <Icon icon="flag-variant" /> : <Icon icon="flag-variant-outline" />}
-      </button>
+      {priority ? <Icon icon="flag-variant" /> : null}
+
     </Box>
   );
 };
