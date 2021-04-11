@@ -1,6 +1,8 @@
 // @flow
 import * as React from 'react';
 
+import Modal from '@pkgs/components/Modal';
+
 import { useFirebase } from '@pkgs/utils';
 
 import Layout from './Layout';
@@ -96,6 +98,7 @@ const Main = (): React.Node => {
           onListDeletion={handleListDeletion}
         />
       )}
+      <Modal />
     </>
   );
 };
