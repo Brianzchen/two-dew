@@ -18,25 +18,25 @@ const Modal: React$AbstractComponent<Props, HTMLElement> = React.forwardRef<Prop
 
   const styles = {
     container: {
-      width: '250px',
-      height: '250px',
+      width: '50%',
+      height: 'auto',
       border: 'solid',
+      borderRadius: '30px',
+      display: 'flex-wrap',
     },
   };
 
-  return (
-    open
-    && (
-      <>
-        <Box
-          style={styles.container}
-        >
-          <p> Modal</p>
-          {children}
-        </Box>
-        {activeRef && <p> Active Ref</p>}
-      </>
-    )
+  return open && (
+    <>
+      <button type="button"> Exit</button>
+      <Box
+        style={styles.container}
+      >
+        <div> Modal</div>
+        {children}
+      </Box>
+      {activeRef && <p> Active Ref</p>}
+    </>
   );
 });
 
