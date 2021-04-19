@@ -103,7 +103,11 @@ const Main = (): React.Node => {
       <Box>
 
         <button type="button" onClick={() => { setOpenModal(!openModal); }}>Modal button</button>
-        <Modal open={openModal} />
+        <Modal open={openModal}>
+          <div>
+            test in Modal box
+          </div>
+        </Modal>
       </Box>
 
     </>
