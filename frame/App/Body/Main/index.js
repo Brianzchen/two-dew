@@ -1,9 +1,6 @@
 // @flow
 import * as React from 'react';
 
-import Box from '@pkgs/components/Box';
-import Modal from '@pkgs/components/Modal';
-
 import { useFirebase } from '@pkgs/utils';
 
 import Layout from './Layout';
@@ -83,8 +80,6 @@ const Main = (): React.Node => {
       });
     }
   }, [user, renderedLists]);
-
-  const [openModal, setOpenModal] = React.useState(false);
   return (
     <>
       <Options
@@ -100,16 +95,6 @@ const Main = (): React.Node => {
           onListDeletion={handleListDeletion}
         />
       )}
-      <Box>
-
-        <button type="button" onClick={() => { setOpenModal(!openModal); }}>Modal button</button>
-        <Modal open={openModal}>
-          <div>
-            test in Modal box
-          </div>
-        </Modal>
-      </Box>
-
     </>
   );
 };
