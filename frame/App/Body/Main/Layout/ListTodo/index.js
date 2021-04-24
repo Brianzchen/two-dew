@@ -37,14 +37,11 @@ const ListTodo = ({
         show completed
       </div>
       <Box>
-
         <button type="button" onClick={() => { setOpenModal(!openModal); }}>Add New List Item</button>
         <Modal open={openModal}>
-
           <AddItem
             listId={id}
           />
-
         </Modal>
       </Box>
       {items.map((o) => (

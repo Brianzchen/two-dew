@@ -1,5 +1,4 @@
 // @flow
-
 import * as React from 'react';
 
 import Box from '../Box';
@@ -29,7 +28,6 @@ const Modal: React$AbstractComponent<Props, HTMLElement> = React.forwardRef<Prop
 
   return open && (
     <>
-
       <Box
         style={styles.container}
       >
@@ -38,7 +36,6 @@ const Modal: React$AbstractComponent<Props, HTMLElement> = React.forwardRef<Prop
           Modal
           {children}
         </div>
-
       </Box>
       {activeRef && <p> Active Ref</p>}
     </>
