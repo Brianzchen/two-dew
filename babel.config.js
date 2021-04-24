@@ -26,12 +26,4 @@ const config = {
   ],
 };
 
-if (process.env.NODE_ENV !== 'test') {
-  config.presets[0][1].modules = false;
-  config.ignore = [
-    '*/**/*.spec.js',
-    '*/**/testUtils/*',
-  ];
-}
-
 module.exports = config;

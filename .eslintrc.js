@@ -8,7 +8,7 @@ module.exports = {
     es6: true,
     'jest/globals': true,
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   plugins: [
     'react',
     'jest',
