@@ -80,6 +80,7 @@ const Main = (): React.Node => {
       });
     }
   }, [user, renderedLists]);
+
   return (
     <>
       <Options

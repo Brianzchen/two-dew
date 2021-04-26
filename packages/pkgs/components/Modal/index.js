@@ -11,10 +11,7 @@ export type Props = {
 const Modal: React$AbstractComponent<Props, HTMLElement> = React.forwardRef<Props, HTMLElement>(({
   children = null,
   open = true,
-}: Props, ref) => {
-  const containerRef = React.useRef();
-  const activeRef = ref || containerRef;
-
+}: Props) => {
   const styles = {
     container: {
       width: '50%',
@@ -27,18 +24,15 @@ const Modal: React$AbstractComponent<Props, HTMLElement> = React.forwardRef<Prop
   };
 
   return open && (
-    <>
-      <Box
-        style={styles.container}
-      >
-        <div>
-          {' '}
-          Modal
-          {children}
-        </div>
-      </Box>
-      {activeRef && <p> Active Ref</p>}
-    </>
+    <Box
+      style={styles.container}
+    >
+      <div>
+        {' '}
+        Modal
+        {children}
+      </div>
+    </Box>
   );
 });
 
