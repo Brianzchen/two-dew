@@ -20,6 +20,8 @@ const Modal: React$AbstractComponent<Props, HTMLElement> = React.forwardRef<Prop
       border: 'solid',
       borderRadius: '30px',
       display: 'flex-wrap',
+      position: 'fixed',
+      backgroundColor: 'white',
     },
   };
 
