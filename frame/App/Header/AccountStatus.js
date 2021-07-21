@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useSelector } from '@core/store';
 import routes from '@pkgs/routes';
@@ -9,9 +9,23 @@ import { useFirebase } from '@pkgs/utils';
 const AccountStatus = (): React.Node => {
   const firebase = useFirebase();
   const authenticated = useSelector((state) => state.app.authenticated);
+  const location = useLocation();
+  const currentlyOnLogin = location.pathname === routes.login;
 
   const handleLogout = () => {
     firebase.auth().signOut();
+  };
+
+  const buttonStyle = {
+    color: '#4F1B1B',
+    marginRight: '8px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    border: '1px solid',
+    borderRadius: 16,
+    padding: '4px 24px',
+    height: 'max-content',
+    textDecoration: 'none',
   };
 
   if (authenticated) {
@@ -19,7 +33,7 @@ const AccountStatus = (): React.Node => {
       <button
         type="button"
         onClick={handleLogout}
-        style={{ marginRight: '10%' }}
+        style={buttonStyle}
       >
         Logout
       </button>
@@ -28,10 +42,10 @@ const AccountStatus = (): React.Node => {
 
   return (
     <Link
-      to={routes.login}
-      style={{ margin: '2%', marginRight: '10%' }}
+      to={currentlyOnLogin ? routes.join : routes.login}
+      style={buttonStyle}
     >
-      Login
+      {currentlyOnLogin ? 'Join' : 'Login'}
     </Link>
   );
 };
