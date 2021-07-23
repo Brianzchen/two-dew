@@ -3,8 +3,8 @@ import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
 
-import Layout from './Layout';
-import Options from './Options';
+import DailyLists from './DailyLists';
+import GenericLists from './GenericLists';
 
 export type LayoutT = Array<{
   data: Array<string>,
@@ -15,6 +15,8 @@ const Main = (): React.Node => {
   const user = auth().currentUser;
 
   const [lists, setLists] = React.useState([]);
+  const [genericLists, setGenericLists] = React.useState([]);
+  const [dailyLists, setDailyLists] = React.useState([]);
   const [renderedLists, setRenderedLists] = React.useState<LayoutT | void>();
 
   const handleAddNewList = (list) => {
@@ -24,8 +26,18 @@ const Main = (): React.Node => {
     ]);
   };
 
-  const handleListDeletion = (listId: string) => {
-    setLists((pLists) => pLists.filter((o) => o.id !== listId));
+  const handleAddGenericList = (list) => {
+    setGenericLists((pLists) => [
+      ...pLists,
+      list,
+    ]);
+  };
+
+  const handleAddDailyList = (list) => {
+    setDailyLists((pLists) => [
+      ...pLists,
+      list,
+    ]);
   };
 
   React.useEffect(() => {
@@ -34,6 +46,18 @@ const Main = (): React.Node => {
       firestore().collection('lists').where('owner', '==', user.uid).get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.type === 'daily') {
+              handleAddDailyList({
+                ...doc.data(),
+                id: doc.id,
+              });
+            } else if (data.type === 'list') {
+              handleAddGenericList({
+                ...doc.data(),
+                id: doc.id,
+              });
+            }
             handleAddNewList({
               ...doc.data(),
               id: doc.id,
@@ -48,6 +72,7 @@ const Main = (): React.Node => {
       firestore().collection('users').doc(user.uid).get()
         .then((snapshot) => {
           const data = snapshot.data();
+          console.log(data);
           if (!data) {
             const initialLayout = [
               {
@@ -64,6 +89,7 @@ const Main = (): React.Node => {
                 console.error(err);
               });
           } else {
+            console.log('setRenderedLists', data.layout);
             setRenderedLists(data.layout);
           }
         })
@@ -83,19 +109,14 @@ const Main = (): React.Node => {
 
   return (
     <>
-      <Options
-        handleAddNewList={handleAddNewList}
-        setRenderedLists={setRenderedLists}
+      <DailyLists
+        handleAddNewList={handleAddDailyList}
+        dailyLists={dailyLists}
       />
-      {renderedLists && (
-        <Layout
-          lists={lists}
-          renderedLists={renderedLists}
-          // $FlowExpectedError[incompatible-type]
-          setRenderedLists={setRenderedLists}
-          onListDeletion={handleListDeletion}
-        />
-      )}
+      <GenericLists
+        handleAddNewList={handleAddGenericList}
+        genericLists={genericLists}
+      />
     </>
   );
 };

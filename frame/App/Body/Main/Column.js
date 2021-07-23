@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import { Box } from '@pkgs/components';
+import { Box, ClickAwayListener } from '@pkgs/components';
 
 const mapValueToDay = (value) => {
   switch (value) {
@@ -26,13 +26,17 @@ const mapValueToDay = (value) => {
 
 type Props = {
   children?: React.Node,
-  day: number,
+  day?: number,
+  title?: string,
 };
 
 const Column = ({
   children = null,
-  day,
+  day = undefined,
+  title = '',
 }: Props): React.Node => {
+  const renderColumn = day || title;
+  const [activeColumn, setActiveColumn] = React.useState(false);
   const [isToday, setIsToday] = React.useState(false);
 
   React.useEffect(() => {
@@ -50,7 +54,7 @@ const Column = ({
   const styles = {
     container: {
       flex: 1,
-      border: `1px solid ${isToday ? '#4F1B1B' : '#cccccc'}`,
+      border: `1px solid ${isToday || activeColumn ? '#4F1B1B' : '#cccccc'}`,
       borderRadius: '4px',
       backgroundColor: '#F0F0F0',
       margin: '4px',
@@ -60,20 +64,31 @@ const Column = ({
       borderRadius: '2px 2px 0px 0px',
       fontSize: '20px',
       fontWeight: 600,
-      ...isToday && {
+      ...(isToday) && {
         backgroundColor: '#4F1B1B',
         color: 'white',
       },
     },
   };
 
-  return (
-    <Box style={styles.container}>
-      <Box style={styles.header}>
-        {mapValueToDay(day)}
+  return renderColumn && (
+    <ClickAwayListener
+      onClickAway={() => {
+        setActiveColumn(false);
+      }}
+    >
+      <Box
+        style={styles.container}
+        onClick={() => {
+          setActiveColumn(true);
+        }}
+      >
+        <Box style={styles.header}>
+          {day ? mapValueToDay(day) : title}
+        </Box>
+        {children}
       </Box>
-      {children}
-    </Box>
+    </ClickAwayListener>
   );
 };
 
