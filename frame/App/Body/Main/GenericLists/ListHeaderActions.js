@@ -39,43 +39,45 @@ const ListHeaderActions = ({
     }
   };
   const styles = {
+    headerContainer: {
+      borderBottom: '1px solid #4F1B1B',
+      margin: '0px 8px 0px',
+      width: '100%',
+      display: 'flex',
+    },
     container: {
       display: 'flex',
     },
     inputContainer: {
-      padding: '0px 4px',
+      display: 'flex',
+      background: '#FDFAFA',
       border: '1px solid #949494',
       borderRadius: '4px',
+      padding: '0px 4px',
       width: 'max-content',
-      background: '#FDFAFA',
     },
     input: {
-      border: 'none',
       background: 'none',
+      border: 'none',
     },
     selector: {
+      background: '#C85F5F',
       border: 'none',
       borderRadius: '4px',
       color: 'white',
-      background: '#C85F5F',
     },
     headerFont: {
       color: '#4F1B1B',
+      display: 'inline-block',
       letterSpacing: -1,
       margin: '0 12px',
       padding: 0,
-      display: 'inline-block',
     },
   };
 
   return (
     <Box
-      style={{
-        borderBottom: '1px solid #4F1B1B',
-        margin: '0px 8px 0px',
-        width: '100%',
-        display: 'inline-block',
-      }}
+      style={styles.headerContainer}
     >
       <h2 style={styles.headerFont}>Lists.</h2>
       <button
