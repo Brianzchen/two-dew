@@ -32,6 +32,11 @@ const Main = (): React.Node => {
     ]);
   };
 
+  const handleListDeletion = (listId: string) => {
+    setGenericLists((pLists) => pLists.filter((o) => o.id !== listId));
+    setDailyLists((pLists) => pLists.filter((o) => o.id !== listId));
+  };
+
   React.useEffect(() => {
     if (user) {
       // Get all lists belonging to owner
@@ -67,10 +72,12 @@ const Main = (): React.Node => {
       }}
     >
       <DailyLists
+        onListDeletion={handleListDeletion}
         handleAddNewList={handleAddDailyList}
         dailyLists={dailyLists}
       />
       <GenericLists
+        onListDeletion={handleListDeletion}
         handleAddNewList={handleAddGenericList}
         genericLists={genericLists}
       />

@@ -4,17 +4,19 @@ import * as React from 'react';
 import type { ListT } from '@core/types';
 import { Box } from '@pkgs/components';
 
-import ListSwitcher from './ListSwitcher';
+import ListHeaderActions from './ListHeaderActions';
 import ListTodo from './ListTodo';
 
 type Props = {
   handleAddNewList: (list: ListT) => void,
   genericLists: Array<ListT>,
+  onListDeletion: (listId: string) => void,
 };
 
 const GenericLists = ({
   handleAddNewList,
   genericLists,
+  onListDeletion,
 }: Props): React.Node => (
   <Box
     style={{
@@ -23,7 +25,7 @@ const GenericLists = ({
       flexDirection: 'column',
     }}
   >
-    <ListSwitcher
+    <ListHeaderActions
       addList={handleAddNewList}
     />
     <Box
@@ -39,6 +41,7 @@ const GenericLists = ({
             key={listData.id}
           >
             <ListTodo
+              onListDeletion={onListDeletion}
               {...list}
             />
           </div>

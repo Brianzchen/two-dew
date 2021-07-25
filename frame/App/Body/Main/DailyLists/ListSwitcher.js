@@ -11,6 +11,8 @@ type Props = {
   lists: Array<ListT>,
   setName: (string) => void,
   name: string,
+  showCompleted: boolean,
+  setShowCompleted: ((boolean => boolean) | boolean) => void,
 };
 
 const ListSwitcher = ({
@@ -18,6 +20,8 @@ const ListSwitcher = ({
   setName,
   addList,
   name,
+  showCompleted,
+  setShowCompleted,
 }: Props): React.Node => {
   const firebase = useFirebase();
 
@@ -80,54 +84,63 @@ const ListSwitcher = ({
       style={{
         borderBottom: '1px solid #4F1B1B',
         width: '100%',
-        display: 'inline-block',
+        display: 'flex',
+        justifyContent: 'space-between',
       }}
     >
-      <h3 style={styles.headerFont}>Daily Lists.</h3>
-      {lists.map((o) => (
-        <button
-          key={o.name}
-          type="button"
-          onClick={() => {
-            setName(o.name);
-          }}
-          style={name === o.name ? {
-            backgroundColor: '#C35050',
-            borderBottom: '1px solid #C35050',
-            color: 'white',
-          } : {}}
-        >
-          {o.name}
-        </button>
-      ))}
-      <button
-        type="button"
-        onClick={() => {
-          setOpenNewListInput(!openNewListInput);
-        }}
-      >
-        +
-      </button>
-      {openNewListInput && (
-        <Box style={styles.container}>
-          <Box style={styles.inputContainer}>
-            <input
-              value={name}
-              onChange={(e) => {
-                setName(e.currentTarget.value);
-              }}
-              style={styles.input}
-            />
-          </Box>
+      <Box>
+        <h3 style={styles.headerFont}>Daily Lists.</h3>
+        {lists.map((o) => (
           <button
+            key={o.name}
             type="button"
-            onClick={handleCreateList}
-            disabled={!name}
+            onClick={() => setName(o.name)}
+            style={name === o.name ? {
+              backgroundColor: '#C35050',
+              borderBottom: '1px solid #C35050',
+              color: 'white',
+            } : {}}
           >
-            Create New List
+            {o.name}
           </button>
-        </Box>
-      )}
+        ))}
+        <button
+          type="button"
+          onClick={() => setOpenNewListInput(!openNewListInput)}
+        >
+          +
+        </button>
+        {openNewListInput && (
+          <Box style={styles.container}>
+            <Box style={styles.inputContainer}>
+              <input
+                value={name}
+                onChange={(e) => {
+                  setName(e.currentTarget.value);
+                }}
+                style={styles.input}
+              />
+            </Box>
+            <button
+              type="button"
+              onClick={handleCreateList}
+              disabled={!name}
+            >
+              Create New List
+            </button>
+          </Box>
+        )}
+      </Box>
+      <div>
+        <input
+          value={showCompleted}
+          onChange={() => {
+            setShowCompleted && setShowCompleted((pShowCompleted) => !pShowCompleted);
+          }}
+          type="checkbox"
+        />
+        show completed
+      </div>
     </Box>
   );
 };

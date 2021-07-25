@@ -10,7 +10,7 @@ type Props = {
   addList: (list: ListT) => void,
 };
 
-const ListSwitcher = ({
+const ListHeaderActions = ({
   addList,
 }: Props): React.Node => {
   const firebase = useFirebase();
@@ -80,9 +80,7 @@ const ListSwitcher = ({
       <h2 style={styles.headerFont}>Lists.</h2>
       <button
         type="button"
-        onClick={() => {
-          setOpenNewListInput(!openNewListInput);
-        }}
+        onClick={() => setOpenNewListInput(!openNewListInput)}
       >
         +
       </button>
@@ -110,4 +108,4 @@ const ListSwitcher = ({
   );
 };
 
-export default ListSwitcher;
+export default ListHeaderActions;
