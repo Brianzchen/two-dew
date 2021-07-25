@@ -8,18 +8,18 @@ import { Box } from '@pkgs/components';
 
 import AddItem from '../components/AddItem';
 import ListItem from '../components/ListItem';
-
-import Column from './Column';
+import Column from '../Column';
 
 type Props = {
   ...ListT,
+  showCompleted: boolean,
 };
 
 const DailyTodo = ({
   id,
+  showCompleted,
 }: Props): React.Node => {
   const [items, setItems] = React.useState([]);
-  const [showCompleted, setShowCompleted] = React.useState(false);
 
   const mapItemsToDays = range(0, 7).map((o) => {
     const dayItems = items.filter((i) => i.day === o);
@@ -37,16 +37,6 @@ const DailyTodo = ({
 
   return (
     <>
-      <div>
-        Show completed
-        <input
-          value={showCompleted}
-          onChange={() => {
-            setShowCompleted((pShowCompleted) => !pShowCompleted);
-          }}
-          type="checkbox"
-        />
-      </div>
       <Box
         style={{
           display: 'flex',
@@ -58,6 +48,7 @@ const DailyTodo = ({
           <Column
             key={o.day}
             day={o.day}
+            listId={id}
           >
             <AddItem
               listId={id}

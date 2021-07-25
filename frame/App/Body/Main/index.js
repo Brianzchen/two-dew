@@ -2,9 +2,10 @@
 import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
+import { Box } from '@pkgs/components';
 
-import Layout from './Layout';
-import Options from './Options';
+import DailyLists from './DailyLists';
+import GenericLists from './GenericLists';
 
 export type LayoutT = Array<{
   data: Array<string>,
@@ -14,18 +15,27 @@ const Main = (): React.Node => {
   const { auth, firestore } = useFirebase();
   const user = auth().currentUser;
 
-  const [lists, setLists] = React.useState([]);
-  const [renderedLists, setRenderedLists] = React.useState<LayoutT | void>();
+  const [genericLists, setGenericLists] = React.useState([]);
+  const [dailyLists, setDailyLists] = React.useState([]);
+  const [listsInitilaised, setListsInitialised] = React.useState(false);
 
-  const handleAddNewList = (list) => {
-    setLists((pLists) => [
+  const handleAddGenericList = (list) => {
+    setGenericLists((pLists) => [
+      ...pLists,
+      list,
+    ]);
+  };
+
+  const handleAddDailyList = (list) => {
+    setDailyLists((pLists) => [
       ...pLists,
       list,
     ]);
   };
 
   const handleListDeletion = (listId: string) => {
-    setLists((pLists) => pLists.filter((o) => o.id !== listId));
+    setGenericLists((pLists) => pLists.filter((o) => o.id !== listId));
+    setDailyLists((pLists) => pLists.filter((o) => o.id !== listId));
   };
 
   React.useEffect(() => {
@@ -34,38 +44,20 @@ const Main = (): React.Node => {
       firestore().collection('lists').where('owner', '==', user.uid).get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            handleAddNewList({
-              ...doc.data(),
-              id: doc.id,
-            });
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-
-      // Get user preference data
-      firestore().collection('users').doc(user.uid).get()
-        .then((snapshot) => {
-          const data = snapshot.data();
-          if (!data) {
-            const initialLayout = [
-              {
-                data: [''],
-              },
-            ];
-            firestore().collection('users').doc(user.uid).set({
-              layout: initialLayout,
-            })
-              .then(() => {
-                setRenderedLists(initialLayout);
-              })
-              .catch((err) => {
-                console.error(err);
+            const data = doc.data();
+            if (data.type === 'daily') {
+              handleAddDailyList({
+                ...doc.data(),
+                id: doc.id,
               });
-          } else {
-            setRenderedLists(data.layout);
-          }
+            } else if (data.type === 'list') {
+              handleAddGenericList({
+                ...doc.data(),
+                id: doc.id,
+              });
+            }
+          });
+          setListsInitialised(true);
         })
         .catch((err) => {
           console.error(err);
@@ -73,30 +65,25 @@ const Main = (): React.Node => {
     }
   }, []);
 
-  React.useEffect(() => {
-    if (user && renderedLists) {
-      firestore().collection('users').doc(user.uid).update({
-        layout: renderedLists,
-      });
-    }
-  }, [user, renderedLists]);
-
-  return (
-    <>
-      <Options
-        handleAddNewList={handleAddNewList}
-        setRenderedLists={setRenderedLists}
+  return listsInitilaised && (
+    <Box
+      style={{
+        maxWidth: '100%',
+        height: '100%',
+        margin: '0px 8px',
+      }}
+    >
+      <DailyLists
+        onListDeletion={handleListDeletion}
+        handleAddNewList={handleAddDailyList}
+        dailyLists={dailyLists}
       />
-      {renderedLists && (
-        <Layout
-          lists={lists}
-          renderedLists={renderedLists}
-          // $FlowExpectedError[incompatible-type]
-          setRenderedLists={setRenderedLists}
-          onListDeletion={handleListDeletion}
-        />
-      )}
-    </>
+      <GenericLists
+        onListDeletion={handleListDeletion}
+        handleAddNewList={handleAddGenericList}
+        genericLists={genericLists}
+      />
+    </Box>
   );
 };
 

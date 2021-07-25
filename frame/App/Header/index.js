@@ -10,18 +10,29 @@ const Header = (): React.Node => {
     container: {
       display: 'flex',
       justifyContent: 'space-between',
-      height: '50px',
-      backgroundColor: 'red',
+      height: 'max-content',
     },
     headerText: {
       display: 'inline-flex',
+      alignItems: 'baseline',
       justifyContent: 'flex-start ',
       width: '50%',
+      marginLeft: '8px',
+      marginTop: 'auto',
+      marginBottom: 'auto',
     },
     headerStatus: {
       display: 'inline-flex',
       justifyContent: 'flex-end ',
       width: '50%',
+    },
+    headerFont: {
+      color: '#4F1B1B',
+      letterSpacing: -4,
+      fontSize: '40px',
+      fontWeight: 600,
+      margin: 0,
+      padding: 0,
     },
   };
 
@@ -29,16 +40,17 @@ const Header = (): React.Node => {
     <Box style={styles.container}>
       <Box style={styles.headerText}>
         <h1 style={{
-          fontSize: '40px', fontWeight: 600, margin: 0, padding: 0, marginLeft: '5%',
+          ...styles.headerFont,
         }}
         >
-          Two
+          two
         </h1>
         <h1 style={{
-          color: 'white', fontSize: '40px', fontWeight: 600, margin: 0, padding: 0,
+          ...styles.headerFont,
+          color: '#C85F5F',
         }}
         >
-          Dew
+          dew.
         </h1>
       </Box>
       <Box style={styles.headerStatus}>

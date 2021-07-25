@@ -50,6 +50,9 @@ const AddItem = ({
     >
       <input
         value={value}
+        style={{
+          width: '100%',
+        }}
         onChange={(e) => {
           setValue(e.currentTarget.value);
         }}

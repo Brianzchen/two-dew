@@ -10,7 +10,11 @@ export const loginJoinStyles = {
   form: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    maxWidth: '500px',
+    marginTop: '20px',
+    maxWidth: '450px',
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '8px',
   },
   input: {
     border: '1px solid #e6e6e6',
