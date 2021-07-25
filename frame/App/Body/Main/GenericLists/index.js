@@ -29,6 +29,7 @@ const GenericLists = ({
     <Box
       style={{
         display: 'flex',
+        overflow: 'auto',
       }}
     >
       {genericLists.map((listData) => {
@@ -38,7 +39,6 @@ const GenericLists = ({
             key={listData.id}
           >
             <ListTodo
-              listName={listData.name}
               {...list}
             />
           </div>

@@ -20,7 +20,7 @@ const Body = (): React.Node => {
             <Main />
           )
           : (
-            <Redirect to={routes.join} />
+            <Redirect to={routes.login} />
           )}
       </Route>
       <Route path={routes.join}>

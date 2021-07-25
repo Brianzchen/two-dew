@@ -4,6 +4,8 @@ import * as React from 'react';
 import { Box } from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
+import type { ListT } from '@core/types';
+
 type Props = {
   addList: (list: ListT) => void,
   lists: Array<ListT>,
@@ -37,11 +39,12 @@ const ListSwitcher = ({
             ...snapshot.data(),
             id: docRef.id,
           });
-          setName('');
+          setName(name);
         });
       });
     }
   };
+
   const styles = {
     container: {
       display: 'flex',
@@ -51,7 +54,7 @@ const ListSwitcher = ({
       border: '1px solid #949494',
       borderRadius: '4px',
       width: 'max-content',
-      background: '#FDFAFA',
+      background: '#C35050',
     },
     input: {
       border: 'none',
@@ -63,17 +66,24 @@ const ListSwitcher = ({
       color: 'white',
       background: '#C85F5F',
     },
+    headerFont: {
+      color: '#4F1B1B',
+      letterSpacing: -1,
+      margin: '0 12px',
+      padding: 0,
+      display: 'inline-block',
+    },
   };
 
   return (
     <Box
       style={{
         borderBottom: '1px solid #4F1B1B',
-        margin: '0px 8px 0px',
         width: '100%',
-        display: 'flex',
+        display: 'inline-block',
       }}
     >
+      <h3 style={styles.headerFont}>Daily Lists.</h3>
       {lists.map((o) => (
         <button
           key={o.name}
@@ -82,8 +92,8 @@ const ListSwitcher = ({
             setName(o.name);
           }}
           style={name === o.name ? {
-            backgroundColor: '#4F1B1B',
-            borderBottom: '1px solid #4F1B1B',
+            backgroundColor: '#C35050',
+            borderBottom: '1px solid #C35050',
             color: 'white',
           } : {}}
         >

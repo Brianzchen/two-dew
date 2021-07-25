@@ -64,13 +64,6 @@ const ListTodo = ({
               {...i}
             />
           ))}
-          {items.map((o) => (
-            <ListItem
-              key={o.id}
-              {...o}
-              listId={id}
-            />
-          ))}
         </Column>
       </Box>
     </div>

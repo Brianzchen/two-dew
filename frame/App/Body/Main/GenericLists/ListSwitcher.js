@@ -4,6 +4,8 @@ import * as React from 'react';
 import { Box } from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
+import type { ListT } from '@core/types';
+
 type Props = {
   addList: (list: ListT) => void,
 };
@@ -57,6 +59,13 @@ const ListSwitcher = ({
       color: 'white',
       background: '#C85F5F',
     },
+    headerFont: {
+      color: '#4F1B1B',
+      letterSpacing: -1,
+      margin: '0 12px',
+      padding: 0,
+      display: 'inline-block',
+    },
   };
 
   return (
@@ -65,9 +74,10 @@ const ListSwitcher = ({
         borderBottom: '1px solid #4F1B1B',
         margin: '0px 8px 0px',
         width: '100%',
-        display: 'flex',
+        display: 'inline-block',
       }}
     >
+      <h2 style={styles.headerFont}>Lists.</h2>
       <button
         type="button"
         onClick={() => {

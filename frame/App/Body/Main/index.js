@@ -2,6 +2,7 @@
 import * as React from 'react';
 
 import { useFirebase } from '@pkgs/utils';
+import { Box } from '@pkgs/components';
 
 import DailyLists from './DailyLists';
 import GenericLists from './GenericLists';
@@ -14,17 +15,8 @@ const Main = (): React.Node => {
   const { auth, firestore } = useFirebase();
   const user = auth().currentUser;
 
-  const [lists, setLists] = React.useState([]);
   const [genericLists, setGenericLists] = React.useState([]);
   const [dailyLists, setDailyLists] = React.useState([]);
-  const [renderedLists, setRenderedLists] = React.useState<LayoutT | void>();
-
-  const handleAddNewList = (list) => {
-    setLists((pLists) => [
-      ...pLists,
-      list,
-    ]);
-  };
 
   const handleAddGenericList = (list) => {
     setGenericLists((pLists) => [
@@ -58,40 +50,7 @@ const Main = (): React.Node => {
                 id: doc.id,
               });
             }
-            handleAddNewList({
-              ...doc.data(),
-              id: doc.id,
-            });
           });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-
-      // Get user preference data
-      firestore().collection('users').doc(user.uid).get()
-        .then((snapshot) => {
-          const data = snapshot.data();
-          console.log(data);
-          if (!data) {
-            const initialLayout = [
-              {
-                data: [''],
-              },
-            ];
-            firestore().collection('users').doc(user.uid).set({
-              layout: initialLayout,
-            })
-              .then(() => {
-                setRenderedLists(initialLayout);
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          } else {
-            console.log('setRenderedLists', data.layout);
-            setRenderedLists(data.layout);
-          }
         })
         .catch((err) => {
           console.error(err);
@@ -99,16 +58,14 @@ const Main = (): React.Node => {
     }
   }, []);
 
-  React.useEffect(() => {
-    if (user && renderedLists) {
-      firestore().collection('users').doc(user.uid).update({
-        layout: renderedLists,
-      });
-    }
-  }, [user, renderedLists]);
-
-  return (
-    <>
+  return dailyLists.length > 0 && (
+    <Box
+      style={{
+        maxWidth: '100%',
+        height: '100%',
+        margin: '0px 8px',
+      }}
+    >
       <DailyLists
         handleAddNewList={handleAddDailyList}
         dailyLists={dailyLists}
@@ -117,7 +74,7 @@ const Main = (): React.Node => {
         handleAddNewList={handleAddGenericList}
         genericLists={genericLists}
       />
-    </>
+    </Box>
   );
 };
 
