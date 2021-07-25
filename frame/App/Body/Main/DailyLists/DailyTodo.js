@@ -13,13 +13,11 @@ import Column from '../Column';
 type Props = {
   ...ListT,
   showCompleted: boolean,
-  onListDeletion: (listId: string) => void,
 };
 
 const DailyTodo = ({
   id,
   showCompleted,
-  onListDeletion,
 }: Props): React.Node => {
   const [items, setItems] = React.useState([]);
 
@@ -51,7 +49,6 @@ const DailyTodo = ({
             key={o.day}
             day={o.day}
             listId={id}
-            onListDeletion={onListDeletion}
           >
             <AddItem
               listId={id}

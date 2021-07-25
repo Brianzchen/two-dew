@@ -38,12 +38,14 @@ const DailyLists = ({
         name={listName}
         showCompleted={showCompleted}
         setShowCompleted={setShowCompleted}
-      />
-      <DailyTodo
         onListDeletion={onListDeletion}
-        showCompleted={showCompleted}
-        {...list}
       />
+      {listName && dailyLists && (
+        <DailyTodo
+          showCompleted={showCompleted}
+          {...list}
+        />
+      )}
     </Box>
   );
 };

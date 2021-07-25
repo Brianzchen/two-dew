@@ -1,8 +1,9 @@
 // @flow
 import * as React from 'react';
 
-import { Box, ClickAwayListener, Modal } from '@pkgs/components';
-import { useFirebase } from '@pkgs/utils';
+import { Box, ClickAwayListener } from '@pkgs/components';
+
+import ListActions from './components/ListActions';
 
 const mapValueToDay = (value) => {
   switch (value) {
@@ -32,7 +33,7 @@ type Props = {
   showCompleted?: boolean,
   setShowCompleted?: ((boolean => boolean) | boolean) => void,
   listId: string,
-  onListDeletion: (listId: string) => void,
+  onListDeletion?: (listId: string) => void,
 };
 
 const Column = ({
@@ -44,23 +45,8 @@ const Column = ({
   listId,
   onListDeletion,
 }: Props): React.Node => {
-  const { firestore } = useFirebase();
-
   const [activeColumn, setActiveColumn] = React.useState(false);
-  const [openListActions, setOpenListActions] = React.useState(false);
   const [isToday, setIsToday] = React.useState(false);
-  const [confirmDelete, setConfirmDelete] = React.useState(false);
-
-  const handleDelete = () => {
-    firestore().collection('lists').doc(listId).delete()
-      .then(() => {
-        onListDeletion(listId);
-        setConfirmDelete(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   React.useEffect(() => {
     const handleIsToday = () => setIsToday(new Date().getDay() === day);
@@ -143,73 +129,17 @@ const Column = ({
         <Box style={styles.header}>
           {title === '' ? mapValueToDay(day) : title}
           {typeof day === 'undefined' && (
-            <Box style={styles.listActions}>
-              <button
-                type="button"
-                onClick={() => { setOpenListActions(true); }}
-              >
-                ...
-              </button>
-              {openListActions && (
-                <ClickAwayListener
-                  onClickAway={() => setOpenListActions(false)}
-                >
-                  <Box style={styles.dropdownActions}>
-                    <div>
-                      <input
-                        value={showCompleted}
-                        onChange={() => {
-                          setShowCompleted && setShowCompleted((pShowCompleted) => !pShowCompleted);
-                        }}
-                        type="checkbox"
-                      />
-                      show completed
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setConfirmDelete(true)}
-                      style={{
-                        borderTop: '1px solid #949494',
-                        width: '100%',
-                        textAlign: 'left',
-                        color: '#C35050',
-                      }}
-                    >
-                      Delete List
-                    </button>
-                  </Box>
-                </ClickAwayListener>
-              )}
-            </Box>
+            <ListActions
+              title={title}
+              showCompleted={showCompleted}
+              setShowCompleted={setShowCompleted}
+              listId={listId}
+              onListDeletion={onListDeletion}
+            />
           )}
         </Box>
         {children}
       </Box>
-      <Modal open={confirmDelete} style={styles.deleteModal}>
-        {`Are you sure you want to delete ${title ?? 'this daily'} list?`}
-        <Box
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            marginTop: '12px',
-          }}
-        >
-          <button
-            type="button"
-            style={styles.deleteButton}
-            onClick={handleDelete}
-          >
-            {`Yes, delete ${title ?? 'this daily'} list`}
-          </button>
-          <button
-            type="button"
-            style={styles.cancelButton}
-            onClick={() => setConfirmDelete(false)}
-          >
-            Cancel
-          </button>
-        </Box>
-      </Modal>
     </ClickAwayListener>
   );
 };

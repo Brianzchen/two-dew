@@ -17,6 +17,7 @@ const Main = (): React.Node => {
 
   const [genericLists, setGenericLists] = React.useState([]);
   const [dailyLists, setDailyLists] = React.useState([]);
+  const [listsInitilaised, setListsInitialised] = React.useState(false);
 
   const handleAddGenericList = (list) => {
     setGenericLists((pLists) => [
@@ -56,6 +57,7 @@ const Main = (): React.Node => {
               });
             }
           });
+          setListsInitialised(true);
         })
         .catch((err) => {
           console.error(err);
@@ -63,7 +65,7 @@ const Main = (): React.Node => {
     }
   }, []);
 
-  return dailyLists.length > 0 && (
+  return listsInitilaised && (
     <Box
       style={{
         maxWidth: '100%',

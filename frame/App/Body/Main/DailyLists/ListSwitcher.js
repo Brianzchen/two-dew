@@ -6,6 +6,8 @@ import { useFirebase } from '@pkgs/utils';
 
 import type { ListT } from '@core/types';
 
+import ListActions from '../components/ListActions';
+
 type Props = {
   addList: (list: ListT) => void,
   lists: Array<ListT>,
@@ -13,6 +15,7 @@ type Props = {
   name: string,
   showCompleted: boolean,
   setShowCompleted: ((boolean => boolean) | boolean) => void,
+  onListDeletion: (listId: string) => void,
 };
 
 const ListSwitcher = ({
@@ -22,9 +25,12 @@ const ListSwitcher = ({
   name,
   showCompleted,
   setShowCompleted,
+  onListDeletion,
 }: Props): React.Node => {
   const firebase = useFirebase();
 
+  const [newListName, setNewListName] = React.useState('');
+  const [listId, setListId] = React.useState(lists[0]?.id ?? '');
   const [openNewListInput, setOpenNewListInput] = React.useState(false);
 
   const handleCreateList = () => {
@@ -33,7 +39,7 @@ const ListSwitcher = ({
 
     if (user) {
       db.add(({
-        name,
+        name: newListName,
         owner: user.uid,
         sharedWith: [],
         type: 'daily',
@@ -43,7 +49,9 @@ const ListSwitcher = ({
             ...snapshot.data(),
             id: docRef.id,
           });
-          setName(name);
+          setName(newListName);
+          setListId(docRef.id);
+          setNewListName('');
         });
       });
     }
@@ -58,7 +66,6 @@ const ListSwitcher = ({
       border: '1px solid #949494',
       borderRadius: '4px',
       width: 'max-content',
-      background: '#C35050',
     },
     input: {
       border: 'none',
@@ -88,13 +95,20 @@ const ListSwitcher = ({
         justifyContent: 'space-between',
       }}
     >
-      <Box>
+      <Box
+        style={{
+          display: 'flex',
+        }}
+      >
         <h3 style={styles.headerFont}>Daily Lists.</h3>
         {lists.map((o) => (
           <button
             key={o.name}
             type="button"
-            onClick={() => setName(o.name)}
+            onClick={() => {
+              setName(o.name);
+              setListId(o.id);
+            }}
             style={name === o.name ? {
               backgroundColor: '#C35050',
               borderBottom: '1px solid #C35050',
@@ -114,9 +128,9 @@ const ListSwitcher = ({
           <Box style={styles.container}>
             <Box style={styles.inputContainer}>
               <input
-                value={name}
+                value={newListName}
                 onChange={(e) => {
-                  setName(e.currentTarget.value);
+                  setNewListName(e.currentTarget.value);
                 }}
                 style={styles.input}
               />
@@ -124,23 +138,23 @@ const ListSwitcher = ({
             <button
               type="button"
               onClick={handleCreateList}
-              disabled={!name}
+              disabled={!newListName}
             >
               Create New List
             </button>
           </Box>
         )}
       </Box>
-      <div>
-        <input
-          value={showCompleted}
-          onChange={() => {
-            setShowCompleted && setShowCompleted((pShowCompleted) => !pShowCompleted);
-          }}
-          type="checkbox"
-        />
-        show completed
-      </div>
+      <ListActions
+        showCompleted={showCompleted}
+        setShowCompleted={setShowCompleted}
+        listId={listId}
+        onListDeletion={() => {
+          onListDeletion(listId);
+          setListId('');
+          setName('');
+        }}
+      />
     </Box>
   );
 };
