@@ -1,5 +1,5 @@
-// flow-typed signature: 6f8a40accb2445e1ba35aa962ded3dfe
-// flow-typed version: 12efeb009c/@testing-library/react_v11.x.x/flow_>=v0.104.x
+// flow-typed signature: 35fa1c02592eba8cd1e5604921e4cbd3
+// flow-typed version: 9f17ca11b4/@testing-library/react_v11.x.x/flow_>=v0.104.x
 
 /**
  * A local copy from:
@@ -167,14 +167,12 @@ declare module '@@aria-query' {
 declare module '@testing-library/react' {
   import type { ARIARole } from '@@aria-query';
 
-  // This type comes from
-  // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L64
-  declare type ReactDOMTestUtilsThenable = {
-    then(resolve: () => mixed, reject?: () => mixed): mixed,
-    ...
-  };
-  // This type comes from
-  // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L116
+  // This type comes from react-dom_v17.x.x.js
+  declare interface ReactDOMTestUtilsThenable {
+    then(resolve: () => mixed, reject?: () => mixed): mixed;
+  }
+
+  // This type comes from react-dom_v17.x.x.js
   declare type ReactDOMTestUtilsAct = (
     callback: () => void | ReactDOMTestUtilsThenable
   ) => ReactDOMTestUtilsThenable;

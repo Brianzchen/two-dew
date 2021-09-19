@@ -1,15 +1,15 @@
 // @flow
-import React from 'react';
-import type { Node as ReactNode } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
 
 const on = (element, type, callback) => {
+  // $FlowFixMe[method-unbinding]
   if (element.addEventListener) {
     element.addEventListener(type, callback);
   }
 };
 
 const off = (element, type, callback) => {
+  // $FlowFixMe[method-unbinding]
   if (element.removeEventListener) {
     element.removeEventListener(type, callback);
   }
@@ -27,68 +27,73 @@ const bind = (callback) => clickAwayEvents.forEach((event) => on(document, event
 const unbind = (callback) => clickAwayEvents.forEach((event) => off(document, event, callback));
 
 type Props = {|
-  children: ReactNode,
+  /**
+   * The element tree you want to track if the user clicks outside this element
+   */
+  children: React.Element<any>,
+  /**
+   * The function to call if the user clicks and element outside the child
+   */
   onClickAway?: (...args: Array<any>) => any,
-  exclusions?: Array<{ ... } | null>,
+  /**
+   * Elements outside the child that you don't want triggering
+   * the onClickAway function if it's clicked
+   */
+  exclusions?: Array<HTMLElement | null>,
 |};
 
 /**
  * Listen for click events that occur somewhere in the document, outside of the element itself. For instance, if you need to hide a menu when people click anywhere else on your page.
  */
-class ClickAwayListener extends React.Component<Props> {
-  isCurrentlyMounted: boolean;
+const ClickAwayListener = ({
+  children,
+  onClickAway,
+  exclusions = [],
+}: Props): React.Node => {
+  let activeRef = React.useRef();
 
-  constructor(props: Props) {
-    super(props);
-
-    (this: any).handleClickAway = this.handleClickAway.bind(this);
-  }
-
-  componentDidMount() {
-    this.isCurrentlyMounted = true;
-    if (this.props.onClickAway) {
-      bind(this.handleClickAway);
+  React.useEffect(() => {
+    if (!onClickAway) {
+      return () => {};
     }
-  }
 
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.onClickAway !== this.props.onClickAway) {
-      unbind(this.handleClickAway);
-      if (this.props.onClickAway) {
-        bind(this.handleClickAway);
+    let isCurrentlyMounted = true;
+
+    const handleClickAway = (event: MouseEvent | TouchEvent) => {
+      if (event.defaultPrevented) {
+        return;
       }
-    }
-  }
 
-  componentWillUnmount() {
-    this.isCurrentlyMounted = false;
-    unbind(this.handleClickAway);
-  }
-
-  handleClickAway(event: MouseEvent | TouchEvent) {
-    if (event.defaultPrevented) {
-      return;
-    }
-
-    // IE11 support, which trigger the handleClickAway even after the unbind
-    if (this.isCurrentlyMounted) {
-      // eslint-disable-next-line react/no-find-dom-node
-      const element = ReactDOM.findDOMNode(this);
-
-      if (event.target instanceof Node && document.documentElement?.contains(event.target)
-          && !isDescendant(element, event.target)
-          && (this.props.exclusions || []).reduce((acc, cur) => {
-            if (!acc || isDescendant(cur, event.target)) return false;
-            return true;
-          }, true)) {
-        this.props.onClickAway && this.props.onClickAway(event);
+      if (activeRef?.current instanceof HTMLElement) {
+        // IE11 support, which trigger the handleClickAway even after the unbind
+        if (isCurrentlyMounted) {
+          if (event.target instanceof Node && document.documentElement?.contains(event.target)
+              && !isDescendant(activeRef.current, event.target)
+              && exclusions.reduce((acc, cur) => {
+                if (!acc || isDescendant(cur, event.target)) return false;
+                return true;
+              }, true)) {
+            onClickAway && onClickAway(event);
+          }
+        }
       }
-    }
+    };
+    bind(handleClickAway);
+
+    return () => {
+      isCurrentlyMounted = false;
+      unbind(handleClickAway);
+    };
+  });
+
+  if (children.ref) {
+    activeRef = children.ref;
+    return children;
   }
 
-  render(): ReactNode {
-    return this.props.children;
-  }
-}
+  return React.cloneElement(children, {
+    ref: activeRef,
+  });
+};
 
 export default ClickAwayListener;

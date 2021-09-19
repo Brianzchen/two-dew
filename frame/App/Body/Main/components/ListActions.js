@@ -77,49 +77,51 @@ const ListActions = ({
   };
 
   return (
-    <ClickAwayListener
-      onClickAway={() => {
-        setActiveColumn(false);
-      }}
-    >
-      <Box style={styles.listActions}>
-        <button
-          type="button"
-          onClick={() => { setOpenListActions(true); }}
-        >
-          ...
-        </button>
-        {openListActions && (
-          <ClickAwayListener
-            onClickAway={() => setOpenListActions(false)}
+    <>
+      <ClickAwayListener
+        onClickAway={() => {
+          setActiveColumn(false);
+        }}
+      >
+        <Box style={styles.listActions}>
+          <button
+            type="button"
+            onClick={() => { setOpenListActions(true); }}
           >
-            <Box style={styles.dropdownActions}>
-              <div>
-                <input
-                  value={showCompleted}
-                  onChange={() => {
-                    setShowCompleted && setShowCompleted((pShowCompleted) => !pShowCompleted);
+            ...
+          </button>
+          {openListActions && (
+            <ClickAwayListener
+              onClickAway={() => setOpenListActions(false)}
+            >
+              <Box style={styles.dropdownActions}>
+                <div>
+                  <input
+                    value={showCompleted}
+                    onChange={() => {
+                      setShowCompleted && setShowCompleted((pShowCompleted) => !pShowCompleted);
+                    }}
+                    type="checkbox"
+                  />
+                  show completed
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(true)}
+                  style={{
+                    borderTop: '1px solid #949494',
+                    width: '100%',
+                    textAlign: 'left',
+                    color: '#C35050',
                   }}
-                  type="checkbox"
-                />
-                show completed
-              </div>
-              <button
-                type="button"
-                onClick={() => setConfirmDelete(true)}
-                style={{
-                  borderTop: '1px solid #949494',
-                  width: '100%',
-                  textAlign: 'left',
-                  color: '#C35050',
-                }}
-              >
-                Delete List
-              </button>
-            </Box>
-          </ClickAwayListener>
-        )}
-      </Box>
+                >
+                  Delete List
+                </button>
+              </Box>
+            </ClickAwayListener>
+          )}
+        </Box>
+      </ClickAwayListener>
       <Modal open={confirmDelete} style={styles.deleteModal}>
         {`Are you sure you want to delete ${title ?? 'this daily'} list?`}
         <Box
@@ -145,7 +147,7 @@ const ListActions = ({
           </button>
         </Box>
       </Modal>
-    </ClickAwayListener>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
-// flow-typed signature: e83c7c6c4dd4e19de549da3d800a30fb
-// flow-typed version: 92b572cf25/aphrodite_v2.x.x/flow_>=v0.83.x
+// flow-typed signature: 1b7b4fe3a3d91a7d187d95bb852213e8
+// flow-typed version: 76eecf6c8e/aphrodite_v2.x.x/flow_>=v0.83.x
 
 type CSSWideKeyword = 'initial' | 'inherit' | 'unset';
 
@@ -304,7 +304,7 @@ declare module 'aphrodite' {
     clip?: CSSWideKeyword | string,
     clipPath?: string,
     clipRule?: CSSWideKeyword | 'nonzero' | 'evenodd',
-    color?: CSSWideKeyword | string | number,
+    color?: CSSWideKeyword | string,
     columns?: CSSWideKeyword | string | number,
     columnCount?: CSSWideKeyword | number | 'auto',
     columnFill?: CSSWideKeyword | 'auto' | 'balance',
@@ -371,6 +371,9 @@ declare module 'aphrodite' {
       | 'inline-table'
       | 'inline-flex'
       | 'inline-grid'
+      /** <display-webkit> values. */
+      | '-webkit-box'
+      | '-webkit-inline-box'
       /** global values. */
       | CSSWideKeyword,
     emptyCells?: string,
