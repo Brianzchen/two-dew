@@ -34,6 +34,14 @@ const ListItem = ({
       .delete();
   };
 
+  const updatePriority = () => {
+    firebase.firestore().collection('lists').doc(listId).collection('items')
+      .doc(id)
+      .update({
+        priority: !priority,
+      });
+  };
+
   const styles = {
     container: {
       borderTop: '1px solid #cccccc',
@@ -65,7 +73,14 @@ const ListItem = ({
           />
         </button>
       )}
-      {priority && <Icon icon="flag-variant" />}
+      {!completed && (
+        <button
+          type="button"
+          onClick={updatePriority}
+        >
+          <Icon icon={priority ? 'flag-variant' : 'flag-variant-outline'} />
+        </button>
+      )}
 
     </Box>
   );
