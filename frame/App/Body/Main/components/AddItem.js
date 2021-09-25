@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import type { ListItemT } from '@core/types';
-import { Icon } from '@pkgs/components';
+import { Button, Icon } from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
 type Props = {
@@ -57,22 +57,20 @@ const AddItem = ({
           setValue(e.currentTarget.value);
         }}
       />
-      <button
-        type="button"
+      <Button
         onClick={addNewTodoItem}
         disabled={value.length === 0}
       >
         Add New Item
-      </button>
-      <button
-        type="button"
+      </Button>
+      <Button
         disabled={value.length === 0}
         onClick={() => {
           setPriority((pPriority) => !pPriority);
         }}
       >
         <Icon icon={priority ? 'flag-variant' : 'flag-variant-outline'} />
-      </button>
+      </Button>
 
     </div>
   );

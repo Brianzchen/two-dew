@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useSelector } from '@core/store';
+import { Button } from '@pkgs/components';
 import routes from '@pkgs/routes';
 import { useFirebase } from '@pkgs/utils';
 
@@ -30,13 +31,12 @@ const AccountStatus = (): React.Node => {
 
   if (authenticated) {
     return (
-      <button
-        type="button"
+      <Button
         onClick={handleLogout}
         style={buttonStyle}
       >
         Logout
-      </button>
+      </Button>
     );
   }
 

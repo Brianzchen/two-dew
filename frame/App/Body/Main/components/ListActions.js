@@ -1,7 +1,12 @@
 // @flow
 import * as React from 'react';
 
-import { Box, ClickAwayListener, Modal } from '@pkgs/components';
+import {
+  Box,
+  Button,
+  ClickAwayListener,
+  Modal,
+} from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
 type Props = {
@@ -84,12 +89,11 @@ const ListActions = ({
         }}
       >
         <Box style={styles.listActions}>
-          <button
-            type="button"
+          <Button
             onClick={() => { setOpenListActions(true); }}
           >
             ...
-          </button>
+          </Button>
           {openListActions && (
             <ClickAwayListener
               onClickAway={() => setOpenListActions(false)}
@@ -105,8 +109,7 @@ const ListActions = ({
                   />
                   show completed
                 </div>
-                <button
-                  type="button"
+                <Button
                   onClick={() => setConfirmDelete(true)}
                   style={{
                     borderTop: '1px solid #949494',
@@ -116,7 +119,7 @@ const ListActions = ({
                   }}
                 >
                   Delete List
-                </button>
+                </Button>
               </Box>
             </ClickAwayListener>
           )}
@@ -131,20 +134,18 @@ const ListActions = ({
             marginTop: '12px',
           }}
         >
-          <button
-            type="button"
+          <Button
             style={styles.deleteButton}
             onClick={handleDelete}
           >
             {`Yes, delete ${title ?? 'this daily'} list`}
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
             style={styles.cancelButton}
             onClick={() => setConfirmDelete(false)}
           >
             Cancel
-          </button>
+          </Button>
         </Box>
       </Modal>
     </>

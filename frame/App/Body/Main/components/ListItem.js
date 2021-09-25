@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import type { ListItemT } from '@core/types';
-import { Box, Icon } from '@pkgs/components';
+import { Box, Button, Icon } from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
 type Props = {
@@ -55,31 +55,28 @@ const ListItem = ({
       style={styles.container}
     >
       {name}
-      <button
-        type="button"
+      <Button
         onClick={markCompleted}
       >
         <Icon
           icon="check"
         />
-      </button>
+      </Button>
       {completed && (
-        <button
-          type="button"
+        <Button
           onClick={deleteItem}
         >
           <Icon
             icon="delete"
           />
-        </button>
+        </Button>
       )}
       {!completed && (
-        <button
-          type="button"
+        <Button
           onClick={updatePriority}
         >
           <Icon icon={priority ? 'flag-variant' : 'flag-variant-outline'} />
-        </button>
+        </Button>
       )}
 
     </Box>

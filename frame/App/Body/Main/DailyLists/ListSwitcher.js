@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import { Box } from '@pkgs/components';
+import { Box, Button } from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
 import type { ListT } from '@core/types';
@@ -102,9 +102,8 @@ const ListSwitcher = ({
       >
         <h3 style={styles.headerFont}>Daily Lists.</h3>
         {lists.map((o) => (
-          <button
+          <Button
             key={o.name}
-            type="button"
             onClick={() => {
               setName(o.name);
               setListId(o.id);
@@ -116,14 +115,13 @@ const ListSwitcher = ({
             } : {}}
           >
             {o.name}
-          </button>
+          </Button>
         ))}
-        <button
-          type="button"
+        <Button
           onClick={() => setOpenNewListInput(!openNewListInput)}
         >
           +
-        </button>
+        </Button>
         {openNewListInput && (
           <Box style={styles.container}>
             <Box style={styles.inputContainer}>
@@ -135,13 +133,12 @@ const ListSwitcher = ({
                 style={styles.input}
               />
             </Box>
-            <button
-              type="button"
+            <Button
               onClick={handleCreateList}
               disabled={!newListName}
             >
               Create New List
-            </button>
+            </Button>
           </Box>
         )}
       </Box>

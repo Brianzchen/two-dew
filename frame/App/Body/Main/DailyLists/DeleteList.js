@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import { ClickAwayListener } from '@pkgs/components';
+import { Button, ClickAwayListener } from '@pkgs/components';
 import { useFirebase } from '@pkgs/utils';
 
 type Props = {
@@ -52,21 +52,19 @@ const DeleteList = ({
       }}
     >
       <div>
-        <button
-          type="button"
+        <Button
           onClick={() => {
             setConfirmDelete(true);
           }}
         >
           Delete list
-        </button>
+        </Button>
         {confirmDelete && (
-          <button
-            type="button"
+          <Button
             onClick={handleDelete}
           >
             yes delete
-          </button>
+          </Button>
         )}
       </div>
     </ClickAwayListener>

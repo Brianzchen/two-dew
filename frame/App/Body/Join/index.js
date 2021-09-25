@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Box } from '@pkgs/components';
+import { Box, Button } from '@pkgs/components';
 import routes from '@pkgs/routes';
 import { useFirebase } from '@pkgs/utils';
 
@@ -58,12 +58,12 @@ const Join = (): React.Node => {
           {error}
         </Box>
       )}
-      <button
+      <Button
         type="submit"
         style={loginJoinStyles.submitButton}
       >
         Create Account
-      </button>
+      </Button>
       <Box style={loginJoinStyles.inline}>
         <p>Already have an account?</p>
         <Box as={Link} to={routes.login} style={loginJoinStyles.link}>

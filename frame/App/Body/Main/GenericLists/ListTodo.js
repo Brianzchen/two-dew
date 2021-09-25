@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import { useGetListItems } from '@core/service';
-import { Box } from '@pkgs/components';
+import { Box, Button } from '@pkgs/components';
 import type { ListT } from '@core/types';
 
 import Modal from '@pkgs/components/Modal';
@@ -31,7 +31,9 @@ const ListTodo = ({
 
   return (
     <div>
-      <button type="button" onClick={() => { setOpenModal(!openModal); }}>Add New List Item</button>
+      <Button onClick={() => { setOpenModal(!openModal); }}>
+        Add New List Item
+      </Button>
       <Modal open={openModal}>
         <AddItem
           listId={id}
