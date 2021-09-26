@@ -35,9 +35,20 @@ const ListTodo = ({
         Add New List Item
       </Button>
       <Modal open={openModal}>
-        <AddItem
-          listId={id}
-        />
+        <Box>
+          <AddItem
+            listId={id}
+          />
+          <Button
+            onClick={() => setOpenModal(false)}
+            style={{
+              color: '#C35050',
+              float: 'right',
+            }}
+          >
+            Close
+          </Button>
+        </Box>
       </Modal>
       <Box
         style={{
