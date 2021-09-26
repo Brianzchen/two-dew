@@ -62,10 +62,10 @@ const ListSwitcher = ({
       display: 'flex',
     },
     inputContainer: {
-      padding: '0px 4px',
       border: '1px solid #949494',
       borderRadius: '4px',
       width: 'max-content',
+      marginBottom: '4px',
     },
     input: {
       border: 'none',
@@ -80,7 +80,7 @@ const ListSwitcher = ({
     headerFont: {
       color: '#4F1B1B',
       letterSpacing: -1,
-      margin: '0 12px',
+      margin: '2px 12px',
       padding: 0,
       display: 'inline-block',
     },

@@ -44,9 +44,13 @@ const ListItem = ({
 
   const styles = {
     container: {
+      display: 'flex',
       borderTop: '1px solid #cccccc',
       textDecoration: completed ? 'line-through' : 'initial',
       backgroundColor: priority ? 'grey' : undefined,
+    },
+    itemName: {
+      flexGrow: 3,
     },
   };
 
@@ -54,7 +58,9 @@ const ListItem = ({
     <Box
       style={styles.container}
     >
-      {name}
+      <Box style={styles.itemName}>
+        {name}
+      </Box>
       <Button
         onClick={markCompleted}
       >
