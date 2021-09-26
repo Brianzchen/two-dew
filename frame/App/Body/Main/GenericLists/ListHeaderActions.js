@@ -53,7 +53,6 @@ const ListHeaderActions = ({
       background: '#FDFAFA',
       border: '1px solid #949494',
       borderRadius: '4px',
-      padding: '0px 4px',
       width: 'max-content',
     },
     input: {
