@@ -16,6 +16,8 @@ type Props = {
   showCompleted: boolean,
   setShowCompleted: ((boolean => boolean) | boolean) => void,
   onListDeletion: (listId: string) => void,
+  showFlagged: boolean,
+  setShowFlagged: ((boolean => boolean) | boolean) => void,
 };
 
 const ListSwitcher = ({
@@ -26,6 +28,8 @@ const ListSwitcher = ({
   showCompleted,
   setShowCompleted,
   onListDeletion,
+  showFlagged,
+  setShowFlagged,
 }: Props): React.Node => {
   const firebase = useFirebase();
 
@@ -151,6 +155,8 @@ const ListSwitcher = ({
           setListId('');
           setName('');
         }}
+        showFlagged={showFlagged}
+        setShowFlagged={setShowFlagged}
       />
     </Box>
   );

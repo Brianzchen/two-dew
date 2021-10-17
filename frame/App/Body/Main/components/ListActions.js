@@ -13,6 +13,8 @@ type Props = {
   title?: string,
   showCompleted?: boolean,
   setShowCompleted?: ((boolean => boolean) | boolean) => void,
+  showFlagged: boolean,
+  setShowFlagged?: ((boolean =>boolean) | boolean) => void,
   listId: string,
   onListDeletion?: (listId: string) => void,
 };
@@ -21,6 +23,8 @@ const ListActions = ({
   title,
   showCompleted = false,
   setShowCompleted,
+  showFlagged = false,
+  setShowFlagged,
   listId,
   onListDeletion,
 }: Props): React.Node => {
@@ -107,7 +111,17 @@ const ListActions = ({
                     }}
                     type="checkbox"
                   />
-                  show completed
+                  Show Completed
+                </div>
+                <div>
+                  <input
+                    value={showFlagged}
+                    onChange={() => {
+                      setShowFlagged && setShowFlagged((pshowFlagged) => !pshowFlagged);
+                    }}
+                    type="checkbox"
+                  />
+                  Filter Priority
                 </div>
                 <Button
                   onClick={() => setConfirmDelete(true)}

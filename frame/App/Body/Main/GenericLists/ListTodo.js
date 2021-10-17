@@ -22,12 +22,16 @@ const ListTodo = ({
   onListDeletion,
 }: Props): React.Node => {
   const [showCompleted, setShowCompleted] = React.useState(false);
+  const [showFlagged, setShowFlagged] = React.useState(false);
   const [items, setItems] = React.useState([]);
   const [openModal, setOpenModal] = React.useState(false);
 
   useGetListItems(id, (newItems) => {
     setItems(newItems);
-  }, { completed: showCompleted });
+  }, {
+    completed: showCompleted,
+    flagged: showFlagged,
+  });
 
   return (
     <div>
@@ -63,6 +67,8 @@ const ListTodo = ({
           setShowCompleted={setShowCompleted}
           listId={id}
           onListDeletion={onListDeletion}
+          showFlagged={showFlagged}
+          setShowFlagged={setShowFlagged}
         >
           <AddItem
             listId={id}
