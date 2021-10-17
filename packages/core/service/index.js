@@ -9,6 +9,7 @@ export const useGetListItems = (
   callback: (items: Array<ListItemT>) => void,
   options?: {
     completed?: boolean,
+    flagged?: boolean,
     ...
   } = {},
 ) => {
@@ -30,7 +31,11 @@ export const useGetListItems = (
 
     let unsubscribe;
 
-    if (!options.completed) {
+    if (options.flagged) {
+      unsubscribe = itemCollection.where('priority', '==', true).onSnapshot((snapshot) => {
+        updateItems(snapshot);
+      });
+    } else if (!options.completed) {
       unsubscribe = itemCollection.where('completed', '==', false).onSnapshot((snapshot) => {
         updateItems(snapshot);
       });
@@ -43,5 +48,5 @@ export const useGetListItems = (
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [listId, options.completed]);
+  }, [listId, options.completed, options.flagged]);
 };

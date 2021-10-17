@@ -32,6 +32,8 @@ type Props = {
   title?: string,
   showCompleted?: boolean,
   setShowCompleted?: ((boolean => boolean) | boolean) => void,
+  showFlagged?: boolean,
+  setShowFlagged?: ((boolean => boolean) | boolean) => void,
   listId: string,
   onListDeletion?: (listId: string) => void,
 };
@@ -44,6 +46,8 @@ const Column = ({
   setShowCompleted,
   listId,
   onListDeletion,
+  showFlagged = false,
+  setShowFlagged,
 }: Props): React.Node => {
   const [activeColumn, setActiveColumn] = React.useState(false);
   const [isToday, setIsToday] = React.useState(false);
@@ -135,6 +139,8 @@ const Column = ({
               setShowCompleted={setShowCompleted}
               listId={listId}
               onListDeletion={onListDeletion}
+              showFlagged={showFlagged}
+              setShowFlagged={setShowFlagged}
             />
           )}
         </Box>

@@ -13,11 +13,13 @@ import Column from '../Column';
 type Props = {
   ...ListT,
   showCompleted: boolean,
+  showFlagged: boolean,
 };
 
 const DailyTodo = ({
   id,
   showCompleted,
+  showFlagged,
 }: Props): React.Node => {
   const [items, setItems] = React.useState([]);
 
@@ -33,6 +35,7 @@ const DailyTodo = ({
     setItems(newItems);
   }, {
     completed: showCompleted,
+    flagged: showFlagged,
   });
 
   return (

@@ -21,6 +21,7 @@ const DailyLists = ({
   const [listName, setListName] = React.useState(dailyLists[0]?.name);
   const list = dailyLists.filter((o) => o.name === listName)[0];
   const [showCompleted, setShowCompleted] = React.useState(false);
+  const [showFlagged, setShowFlagged] = React.useState(false);
 
   return (
     <Box
@@ -39,10 +40,13 @@ const DailyLists = ({
         showCompleted={showCompleted}
         setShowCompleted={setShowCompleted}
         onListDeletion={onListDeletion}
+        showFlagged={showFlagged}
+        setShowFlagged={setShowFlagged}
       />
       {listName && dailyLists && (
         <DailyTodo
           showCompleted={showCompleted}
+          showFlagged={showFlagged}
           {...list}
         />
       )}
